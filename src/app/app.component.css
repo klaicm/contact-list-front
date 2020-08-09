@@ -1,0 +1,17 @@
+.app-body {
+    background-color: white;
+    text-align: center; 
+    margin-left: 32px; 
+    margin-right: 32px;
+    font-family: 'Courier New', Courier, monospace;
+    margin-bottom: 128px;
+}
+
+.typecast-header {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    background-image: linear-gradient(to right, rgba(0, 153, 153, .8) , rgba(0, 153, 153, .5));
+    font-weight: 700;
+    color: white;
+    font-size: 20px;
+}

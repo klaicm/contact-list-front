@@ -1,0 +1,100 @@
+.contacts-body {
+    margin-top: 64px; 
+    text-align: center;
+}
+
+.contact-div {
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    padding: 16px;
+    height: 140px;
+    transition: border 0.2s;
+}
+
+.div-padding {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.contact-div:hover {
+    border: 1px solid rgba(0, 153, 153, .8);
+}
+
+.contact-div:hover > .contact-name {
+    font-weight: 600;
+    color: rgba(0, 153, 153, .8);
+    cursor: pointer;
+}
+
+.add-new-contact-div {
+    border: 1.3px dashed lightgrey;
+    border-radius: 3px;
+    padding: 16px;
+    height: 140px;
+}
+
+.add-new-contact-div:hover {
+    border: 1.3px dashed rgba(0, 153, 153, .8);
+    cursor: pointer;
+}
+
+.add-new-contact-div:hover > .contact-name {
+    font-weight: 600;
+    color: rgba(0, 153, 153, .8);
+}
+
+.contact-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: lightgrey;
+    font-size: 18px;
+    transition: color 0.2s;
+}
+
+.icon-left {
+    display: inline-block;
+    text-align: left;
+    width: 50%;
+}
+
+.icon-right {
+    display: inline-block;
+    text-align: right;
+    width: 50%;
+}
+
+.trash-icon-margin {
+    margin-left: 16px;
+}
+
+.heart-icon:hover {
+    color: red;
+}
+
+.icon-interactive {
+    color: lightgrey;
+    transition: font-size 0.2s;
+}
+
+.icon-interactive:hover {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.image-cropper {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid lightgrey;
+    margin-bottom: 8px;
+}
+
+img {
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+}

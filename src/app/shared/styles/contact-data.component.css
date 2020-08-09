@@ -1,0 +1,77 @@
+.image-cropper {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid lightgrey;
+    margin-bottom: 8px;
+}
+
+img {
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+}
+
+.contact-name {
+    text-align: left;
+    font-size: 32px;
+    color: lightgrey;
+    font-weight: 600;
+    border-bottom: 1.3px solid rgba(0, 153, 153, .8); 
+    padding-bottom: 12px;
+}
+
+.channel-of-contact {
+    color: rgba(0, 153, 153, .8);
+    font-size: 17px;
+    text-align: left;
+    font-weight: 600;
+    padding: 16px;
+    vertical-align: text-top;
+}
+
+.contact-data {
+    color: lightgrey;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+td {
+    text-align: left;
+    padding: 8px;
+}
+
+.heart-icon:hover {
+    color: red;
+}
+
+.icon-interactive {
+    font-size: 16px;
+}
+
+.icon-interactive:hover {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.icon-right {
+    display: inline-block;
+    text-align: right;
+    width: 50%;
+}
+
+.icon-left {
+    display: inline-block;
+    text-align: left;
+    width: 50%;
+}
+
+.icon-left-margin {
+    margin-left: 32px;
+}
+
+.icon-right-margin {
+    margin-right: 16px;
+}

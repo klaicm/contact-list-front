@@ -1,0 +1,28 @@
+<div class="contact-list-body">
+
+    <div style="margin-top: 32px; margin-bottom: 32px;">
+        <a [ngClass]="isAllContacts ? 'contact-type-active-link' : 'contact-type-link'"
+            (click)="navigateToContacts('all')">All contacts</a>
+        <span class="contact-type-divider"></span>
+        <a [ngClass]="!isAllContacts ? 'contact-type-active-link' : 'contact-type-link'"
+            (click)="navigateToContacts('favorite')">My favorites</a>
+    </div>
+
+    <div class="contact-list-divider"></div>
+
+    <div class="search-field">
+        <i class="fa fa-search icon-search" aria-hidden="true"></i><input class="search-input" [formControl]="searchFormControl"/>
+    </div>
+
+    <div class="container">
+        <div @enterLeaveTriggerAllContacts *ngIf="isAllContacts">
+            <app-contact-list-all></app-contact-list-all>
+        </div>
+
+        <div @enterLeaveTriggerFavoriteContacts *ngIf="isFavorites">
+            <app-contact-list-favorites [allContacts]="filteredOptionsList"></app-contact-list-favorites>
+        </div>
+
+    </div>
+
+</div>

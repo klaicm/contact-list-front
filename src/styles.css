@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+    background-color: lightgrey;
+    margin-top: 0px;
+    margin-bottom: 64px;
+    font-family: 'Courier New', Courier, monospace;
+    overflow-x: hidden;  
+}

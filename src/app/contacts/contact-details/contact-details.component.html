@@ -1,0 +1,54 @@
+<div @enterLeaveTriggerFavoriteContacts *ngIf="isLoaded" class="container" style="margin-top: 64px;">
+    <div class="col-xs-4">
+            <div class="image-cropper pull-right">
+                <img class="rounded" [src]="contact.profilePhoto" />
+            </div>
+    </div>
+    <div class="col-xs-8">
+        <div class="contact-name">
+            <div class="icon-left">
+                <i class="fa fa-arrow-left icon-interactive" aria-hidden="true" (click)="navigateBack()"></i>
+                {{contact.firstName}} {{contact.lastName}}
+            </div>
+
+            <div class="icon-right">
+                <i [ngClass]="setHeartIconClass(contact.isFavorite)" aria-hidden="true"></i>
+                <i class="fa fa-pencil icon-interactive icon-left-margin" aria-hidden="true" (click)="navigateToContactEdit(contact.id)"></i>
+            </div>
+        </div>
+
+        <div style="margin-top: 32px;">
+            <table>
+                <tr>
+                    <td class="channel-of-contact"><i class="fa fa-envelope-o icon-right-margin"
+                            aria-hidden="true"></i>email</td>
+                    <td class="contact-data" style="padding-left: 16px;">{{contact.email}}</td>
+                </tr>
+                <tr>
+                    <td class="channel-of-contact"><i class="fa fa-phone icon-right-margin"
+                            aria-hidden="true"></i>numbers</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td class="contact-data">HOME</td>
+                                <td class="contact-data">{{contact.phoneNumberHome}}</td>
+                            </tr>
+                            <tr>
+                                <td class="contact-data">WORK</td>
+                                <td class="contact-data">{{contact.phoneNumberWork}}</td>
+                            </tr>
+                            <tr>
+                                <td class="contact-data">CELL</td>
+                                <td class="contact-data">{{contact.phoneNumberCell}}</td>
+                            </tr>
+                            <tr>
+                                <td class="contact-data">HUSBAND</td>
+                                <td class="contact-data">{{contact.phoneNumberHusband}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

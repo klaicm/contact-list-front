@@ -1,0 +1,94 @@
+<div @enterLeaveTriggerFavoriteContacts *ngIf="isLoaded" class="container" style="margin-top: 64px;">
+    <div class="col-xs-4">
+        <div class="image-cropper pull-right">
+            <img class="rounded" [src]="contact.profilePhoto" />
+        </div>
+    </div>
+    <div class="col-xs-8">
+        <div class="contact-name">
+            <div class="icon-left">
+                <i class="fa fa-arrow-left icon-interactive" aria-hidden="true" (click)="navigateBack()"></i>
+            </div>
+
+            <div class="icon-right">
+                <i class="fa fa-trash icon-interactive icon-left-margin" aria-hidden="true" (click)="deleteContact(contact.id)"></i>
+            </div>
+        </div>
+
+        <form [formGroup]="contactDataFormGroup">
+            <div class="data-area">
+                <span class="channel-of-contact"><i class="fa fa-user-o icon-right-margin" aria-hidden="true"></i>full
+                    name</span>
+                <section>
+                    <div class="input-field" style="display: inline-block">
+                        <input placeholder="First name" formControlName="firstNameFormControl">
+                    </div>
+                    <div class="input-field" style="display: inline-block">
+                        <input placeholder="Last name" formControlName="lastNameFormControl">
+                    </div>
+                </section>
+            </div>
+
+            <div class="contact-list-divider"></div>
+
+            <div class="data-area">
+                <span class="channel-of-contact"><i class="fa fa-envelope-o icon-right-margin"
+                        aria-hidden="true"></i>email</span>
+                <section>
+                    <div class="input-field">
+                        <input class="email-input" placeholder="e-mail" formControlName="emailFormControl">
+                    </div>
+                </section>
+            </div>
+
+            <div class="contact-list-divider"></div>
+
+            <div class="data-area">
+                <span class="channel-of-contact"><i class="fa fa-phone icon-right-margin"
+                        aria-hidden="true"></i>phones</span>
+                <section>
+                    <div class="input-field" style="display: inline-block">
+                        <input placeholder="Broj telefona" formControlName="phoneNumberHomeFormControl">
+                    </div>
+                    <div class="input-field" style="display: inline-block">
+                        <input placeholder="Lokacija">
+                    </div>
+                </section>
+                <section>
+                    <div class="input-field" style="display: inline-block">
+                        <input placeholder="Broj telefona" formControlName="phoneNumberHomeFormControl">
+                    </div>
+                    <div class="input-field" style="display: inline-block">
+                        <input placeholder="Lokacija">
+                    </div>
+                </section>
+                <section>
+                    <div class="input-field" style="display: inline-block">
+                        <input placeholder="Broj telefona" formControlName="phoneNumberHomeFormControl">
+                    </div>
+                    <div class="input-field" style="display: inline-block">
+                        <input placeholder="Lokacija">
+                    </div>
+                </section>
+                <section>
+                    <div class="input-field" style="display: inline-block">
+                        <input placeholder="Broj telefona" formControlName="phoneNumberHomeFormControl">
+                    </div>
+                    <div class="input-field" style="display: inline-block">
+                        <input placeholder="Lokacija">
+                    </div>
+                </section>
+                <section>
+                    <button class="action-button button-add-new">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add
+                    </button>
+                </section>
+            </div>
+        </form>
+
+        <div class="action-section">
+            <button class="action-button button-grey pull-left">Cancel</button>
+            <button class="action-button button-green" [disabled]="contactDataFormGroup.invalid" (click)="saveContact()">Save</button>
+        </div>
+    </div>
+</div>

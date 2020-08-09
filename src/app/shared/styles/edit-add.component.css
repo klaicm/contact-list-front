@@ -1,0 +1,114 @@
+.contact-list-divider {
+    border-bottom: 2px solid rgba(0, 153, 153, .8); 
+    margin-top: 16px; 
+    margin-bottom: 16px;
+}
+
+.data-area {
+    margin-top: 32px;
+    text-align: left;
+}
+
+input {
+    margin: 8px;
+    padding: 16px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    transition: border 0.3s ease-in-out;
+}
+
+input:focus {
+    border: 1px solid rgba(0, 153, 153, .8);
+    outline: none;
+}
+
+input:invalid {
+    border: 1px solid red;
+    outline: none;
+}
+
+::placeholder {
+    color: lightgrey;
+    opacity: 1;
+}
+
+.action-button {
+    margin: 8px;
+    padding: 8px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-radius: 48px;    
+    font-weight: 700;    
+    border: transparent;
+    width: 100px;
+}
+
+.action-button:focus {
+    outline: none;
+}
+/*
+.action-button:disabled {
+    background-color: lightgrey;
+    color: white;
+}
+*/
+.button-green {
+    background-color: rgba(0, 153, 153, .8);
+    color: white;
+}
+
+.button-grey {
+    background-color: grey;
+    color: white;
+}
+
+.button-green:hover {
+    background-color: rgba(0, 153, 153, 1);
+}
+
+.button-grey:hover {
+    background-color: rgb(175, 175, 175);
+}
+
+.button-green:disabled {
+    background-color: lightgrey;
+    color: white;
+}
+
+.button-grey:disabled {
+    background-color: rgb(175, 175, 175);
+}
+
+.button-add-new {
+    background-color: white;
+    color: rgba(0, 153, 153, .8);
+    border: 1px dashed rgba(0, 153, 153, .8);
+}
+
+.button-add-new:hover {
+    background-color: rgba(0, 153, 153, .8);;
+    color: white;
+    border: 1px dashed white;
+}
+
+.email-input {
+    width: 50%;
+}
+
+.val-error {
+    margin-left: 16px;
+    color: red;
+    font-size: 12px;
+}
+
+.phone-number {
+    display: inline-block;
+}
+
+.fa-times {
+    color: lightgrey;
+}
+
+.action-section {
+    margin-top: 32px;
+}

@@ -1,0 +1,18 @@
+<div @enterLeaveTriggerFilter *ngFor="let contact of favoriteContacts" class="col-xs-12 col-md-3 col-lg-3 div-padding">
+    <div class="contact-div">
+        <div class="icon-left">
+            <i [ngClass]="setHeartIconClass(contact.isFavorite)" aria-hidden="true" (click)="editFavorites(contact.id)"></i>
+        </div>
+
+        <div class="icon-right">
+            <i class="fa fa-pencil icon-interactive" aria-hidden="true" (click)="navigateToContactEdit(contact.id)"></i>
+            <i class="fa fa-trash icon-interactive trash-icon-margin" aria-hidden="true" (click)="deleteContact(contact.id)"></i>
+        </div>
+        <div class="contact-name">
+            <div class="image-cropper" (click)="navigateToContactDetails(contact.id)"><img class="rounded" [src]="contact.profilePhoto" />
+            </div>
+        </div>
+
+        <div class="contact-name" (click)="navigateToContactDetails(contact.id)">{{contact.firstName}} {{contact.lastName}}</div>
+    </div>
+</div>
