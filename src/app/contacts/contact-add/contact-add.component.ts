@@ -102,8 +102,6 @@ export class ContactAddComponent implements OnInit {
                     this._location.back();
                 }, 100);
 
-            } else {
-                console.log('Canceled');
             }
         });
     }

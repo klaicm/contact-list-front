@@ -144,13 +144,11 @@ export class ContactEditComponent implements OnInit, OnDestroy {
                 });
                 contact.phoneNumbers = contact.phoneNumbers + '#';
 
-                console.log(contact.phoneNumbers);
-
-                // this.contactService.saveContact(contact).subscribe(response => {
-                //     if (response) {
-                //         this._location.back();
-                //     }
-                // });
+                this.contactService.saveContact(contact).subscribe(response => {
+                    if (response) {
+                        this._location.back();
+                    }
+                });
             }
         });
     }
