@@ -12,7 +12,7 @@
             </div>
 
             <div class="icon-right">
-                <i [ngClass]="setHeartIconClass(contact.isFavorite)" aria-hidden="true"></i>
+                <i [ngClass]="setHeartIconClass(contact.isFavorite)" aria-hidden="true" (click)="changeIsFavorite()"></i>
                 <i class="fa fa-pencil icon-interactive icon-left-margin" aria-hidden="true" (click)="navigateToContactEdit(contact.id)"></i>
             </div>
         </div>

@@ -132,7 +132,7 @@
         </form>
 
         <div class="action-section">
-            <button class="action-button button-grey pull-left">Cancel</button>
+            <button class="action-button button-grey pull-left" (click)="navigateBack()">Cancel</button>
             <button class="action-button button-green" [disabled]="contactDataFormGroup.invalid" (click)="saveContact()">Save</button>
         </div>
     </div>

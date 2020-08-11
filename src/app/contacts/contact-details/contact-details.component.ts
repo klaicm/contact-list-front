@@ -20,7 +20,7 @@ export class ContactDetailsComponent implements OnInit, OnDestroy {
     private sub: Subscription;
     contact: Contact;
     // this will be used for loader
-    isLoaded = true;
+    isLoaded = false;
 
     constructor(private activatedRoute: ActivatedRoute, private contactService: ContactService, private router: Router,
         private _location: Location) { }
@@ -32,11 +32,9 @@ export class ContactDetailsComponent implements OnInit, OnDestroy {
     }
 
     getContactDetails(contactId: number): void {
-        this.contactService.tempList.subscribe(response => {
-            const contactList: Array<Contact> = response;
-            this.contact = contactList[contactList.findIndex((a: Contact) => a.id === contactId)];
-
-            console.log(this.contact);
+        this.contactService.getContactById(contactId).subscribe((response: Contact) => {
+            this.isLoaded = true;
+            this.contact = response;
         });
     }
 
@@ -54,6 +52,11 @@ export class ContactDetailsComponent implements OnInit, OnDestroy {
         } else {
             return { 'fa': true, 'fa-heart-o': true, 'heart-icon': true, 'icon-interactive': true };
         }
+    }
+
+    changeIsFavorite() {
+        this.contact.isFavorite = !this.contact.isFavorite;
+        this.contactService.saveContact(this.contact).subscribe(() => { });
     }
 
     ngOnDestroy() {

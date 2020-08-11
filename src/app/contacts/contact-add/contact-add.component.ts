@@ -27,24 +27,10 @@ export class ContactAddComponent implements OnInit {
     contactDataFormGroup: FormGroup;
 
     constructor(private contactService: ContactService, private _location: Location, public dialog: MatDialog) {
-
     }
 
     ngOnInit() {
-
-        this.getContactList();
-
         this.contactDataFormGroup = this.createFormGroup();
-
-    }
-
-    /**
-     * This method is only for mock purposes to get shared list in which new contact will be added
-     */
-    getContactList() {
-        this.contactService.tempList.subscribe(response => {
-            this.contactList = response;
-        });
     }
 
     createFormGroup(): FormGroup {
@@ -81,10 +67,7 @@ export class ContactAddComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result === true) {
-                let contact = new Contact();
-
-                // only for mock purposes
-                contact.id = this.getNextContactId();
+                const contact = new Contact();
 
                 contact.firstName = this.contactDataFormGroup.get('firstNameFormControl').value;
                 contact.lastName = this.contactDataFormGroup.get('lastNameFormControl').value;
@@ -95,12 +78,13 @@ export class ContactAddComponent implements OnInit {
                 contact.phoneNumberWork = this.contactDataFormGroup.get('phoneNumberWorkFormControl').value;
                 contact.phoneNumberHusband = this.contactDataFormGroup.get('phoneNumberHusbandFormControl').value;
                 contact.isFavorite = false;
-                contact.profilePhoto = '';
+                contact.profilePhoto = '../../assets/images/forrest_gump.jpg';
 
-                this.contactService.addNewContact(contact);
-
-                // only because tslint about reassigning identifier
-                contact = null;
+                this.contactService.saveContact(contact).subscribe(response => {
+                    if (response) {
+                        // notification bar or success snackbar
+                    }
+                });
 
                 setTimeout(() => {
                     this._location.back();

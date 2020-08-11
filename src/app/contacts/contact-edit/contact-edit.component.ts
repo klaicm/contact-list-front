@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Animations } from 'src/app/shared/animations/animations';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ContactService } from '../services/contact.service';
 import { Contact } from '../models/contact.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -24,42 +24,18 @@ export class ContactEditComponent implements OnInit, OnDestroy {
     private sub: Subscription;
     contact: Contact;
     // this will be used for loader
-    isLoaded = true;
+    isLoaded = false;
 
     contactDataFormGroup: FormGroup;
 
     constructor(private activatedRoute: ActivatedRoute, private contactService: ContactService, private _location: Location,
-         public dialog: MatDialog) {
+        public dialog: MatDialog, private router: Router) {
 
-    }
-
-    ngOnInit() {
-        this.sub = this.activatedRoute.params.subscribe(params => {
-            const contact: Contact = this.getContactDetails(+params['id']);
-            this.contactDataFormGroup = this.createFormGroup(contact);
-        });
-    }
-
-    getContactDetails(contactId: number): Contact {
-        this.contactService.tempList.subscribe(response => {
-            const contactList: Array<Contact> = response;
-            this.contact = contactList[contactList.findIndex((a: Contact) => a.id === contactId)];
-        });
-
-        return this.contact;
-    }
-
-    ngOnDestroy() {
-        this.sub.unsubscribe();
-    }
-
-    createFormGroup(contact: Contact): FormGroup {
-        const contactDataFormGroup = new FormGroup({
-            firstNameFormControl: new FormControl(contact.firstName, Validators.required),
-            lastNameFormControl: new FormControl(contact.lastName, Validators.required),
-            emailFormControl: new FormControl(contact.email, [Validators.required, Validators.email]),
-            phoneNumberHomeFormControl: new FormControl(contact.phoneNumberHome, [Validators.required,
-            Validators.pattern('^[0-9]*$'),
+        this.contactDataFormGroup = new FormGroup({
+            firstNameFormControl: new FormControl('', Validators.required),
+            lastNameFormControl: new FormControl('', Validators.required),
+            emailFormControl: new FormControl('', [Validators.required, Validators.email]),
+            phoneNumberHomeFormControl: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$'),
             Validators.maxLength(10)]),
             phoneNumberWorkFormControl: new FormControl('', [
                 Validators.pattern('^[0-9]*$'),
@@ -72,7 +48,37 @@ export class ContactEditComponent implements OnInit, OnDestroy {
                 Validators.maxLength(10)])
         });
 
-        return contactDataFormGroup;
+    }
+
+    ngOnInit() {
+        this.sub = this.activatedRoute.params.subscribe(params => {
+            this.getContactDetails(+params['id']);
+        });
+    }
+
+    getContactDetails(contactId: number) {
+        let contact = new Contact();
+        this.contactService.getContactById(contactId).subscribe((response: Contact) => {
+            this.isLoaded = true;
+            contact = response;
+            this.createFormGroup(contact);
+            // only for purposes of template rendering for picture
+            this.contact = contact;
+        });
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
+    }
+
+    createFormGroup(contact: Contact) {
+        this.contactDataFormGroup.get('firstNameFormControl').setValue(contact.firstName);
+        this.contactDataFormGroup.get('lastNameFormControl').setValue(contact.lastName);
+        this.contactDataFormGroup.get('emailFormControl').setValue(contact.email);
+        this.contactDataFormGroup.get('phoneNumberHomeFormControl').setValue(contact.phoneNumberHome);
+        this.contactDataFormGroup.get('phoneNumberWorkFormControl').setValue(contact.phoneNumberHome);
+        this.contactDataFormGroup.get('phoneNumberCellFormControl').setValue(contact.phoneNumberHome);
+        this.contactDataFormGroup.get('phoneNumberHusbandFormControl').setValue(contact.phoneNumberHome);
     }
 
     saveContact() {
@@ -87,9 +93,8 @@ export class ContactEditComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result === true) {
-                let contact = this.contact;
+                const contact = this.contact;
 
-                // only for mock purposes
                 contact.firstName = this.contactDataFormGroup.get('firstNameFormControl').value;
                 contact.lastName = this.contactDataFormGroup.get('lastNameFormControl').value;
                 contact.email = this.contactDataFormGroup.get('emailFormControl').value;
@@ -99,21 +104,18 @@ export class ContactEditComponent implements OnInit, OnDestroy {
                 contact.phoneNumberWork = this.contactDataFormGroup.get('phoneNumberWorkFormControl').value;
                 contact.phoneNumberHusband = this.contactDataFormGroup.get('phoneNumberHusbandFormControl').value;
 
-                this.contactService.editContact(contact);
-
-                // only because tslint about reassigning identifier
-                contact = null;
-
-                setTimeout(() => {
-                    this._location.back();
-                }, 100);
+                this.contactService.saveContact(contact).subscribe(response => {
+                    if (response) {
+                        this._location.back();
+                    }
+                });
             } else {
                 console.log('Canceled');
             }
         });
     }
 
-    deleteContact(contactId: number) {
+    deleteContact(contact: Contact) {
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             data: {
                 message: 'Are you sure you want to delete this contact?',
@@ -125,22 +127,11 @@ export class ContactEditComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result === true) {
-                let contact = new Contact();
-                this.contactService.tempList.subscribe(contactsBeforeDelete => {
-                    const contactList: Array<Contact> = contactsBeforeDelete;
-                    contact = contactList[contactList.findIndex((a: Contact) => a.id === contactId)];
-
-                    if (contact) {
-                        this.contactService.removeContact(contact);
-
-                        setTimeout(() => {
-                            this._location.back();
-                        });
-
-                    }
+                this.contactService.deleteContact(contact).subscribe(response => {
+                    setTimeout(() => {
+                        this.router.navigate(['/']);
+                    }, 100);
                 });
-            } else {
-                console.log('Canceled');
             }
         });
     }
