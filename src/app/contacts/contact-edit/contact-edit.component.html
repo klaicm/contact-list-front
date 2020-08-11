@@ -11,7 +11,8 @@
             </div>
 
             <div class="icon-right">
-                <i class="fa fa-trash icon-interactive icon-left-margin" aria-hidden="true" (click)="deleteContact(contact)"></i>
+                <i class="fa fa-trash icon-interactive icon-left-margin" aria-hidden="true"
+                    (click)="deleteContact(contact)"></i>
             </div>
         </div>
 
@@ -27,6 +28,22 @@
                         <input placeholder="Last name" formControlName="lastNameFormControl">
                     </div>
                 </section>
+                <section>
+                    <div @dropErrMsg
+                        *ngIf="contactDataFormGroup.get('firstNameFormControl').invalid && 
+                    (contactDataFormGroup.get('firstNameFormControl').touched || contactDataFormGroup.get('firstNameFormControl').dirty)"
+                        class="val-error">
+                        <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.required">First Name is
+                            required.</span>
+                    </div>
+                    <div @dropErrMsg
+                        *ngIf="contactDataFormGroup.get('lastNameFormControl').invalid && 
+                    (contactDataFormGroup.get('lastNameFormControl').touched || contactDataFormGroup.get('lastNameFormControl').dirty)"
+                        class="val-error">
+                        <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.required">Last name is
+                            required.</span>
+                    </div>
+                </section>
             </div>
 
             <div class="contact-list-divider"></div>
@@ -38,6 +55,15 @@
                     <div class="input-field">
                         <input class="email-input" placeholder="e-mail" formControlName="emailFormControl">
                     </div>
+                    <div @dropErrMsg
+                        *ngIf="contactDataFormGroup.get('emailFormControl').invalid && 
+                    (contactDataFormGroup.get('emailFormControl').touched || contactDataFormGroup.get('emailFormControl').dirty)"
+                        class="val-error">
+                        <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.required">Mail is
+                            required.</span>
+                        <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.email">Mail not in right
+                            format.</span>
+                    </div>
                 </section>
             </div>
 
@@ -46,40 +72,24 @@
             <div class="data-area">
                 <span class="channel-of-contact"><i class="fa fa-phone icon-right-margin"
                         aria-hidden="true"></i>phones</span>
+                <div @enterLeaveTriggerFavoriteContacts formArrayName="phoneNumbers"
+                    *ngFor="let phone of contactDataFormGroup.get('phoneNumbers').controls; let i = index;">
+                    <div [formGroupName]="i">
+                        <section>
+                            <div class="input-field" style="display: inline-block">
+                                <input placeholder="Broj telefona" formControlName="phoneNumber">
+                            </div>
+                            <div class="input-field" style="display: inline-block">
+                                <input placeholder="Lokacija" formControlName="phoneDescription">
+                            </div>
+                            <div style="display: inline-block">
+                                <i class="fa fa-times icon-left-margin icon-interactive" aria-hidden="true" (click)="removeNumber(i)"></i>
+                            </div>
+                        </section>
+                    </div>
+                </div>
                 <section>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Broj telefona" formControlName="phoneNumberHomeFormControl">
-                    </div>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Lokacija">
-                    </div>
-                </section>
-                <section>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Broj telefona" formControlName="phoneNumberHomeFormControl">
-                    </div>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Lokacija">
-                    </div>
-                </section>
-                <section>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Broj telefona" formControlName="phoneNumberHomeFormControl">
-                    </div>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Lokacija">
-                    </div>
-                </section>
-                <section>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Broj telefona" formControlName="phoneNumberHomeFormControl">
-                    </div>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Lokacija">
-                    </div>
-                </section>
-                <section>
-                    <button class="action-button button-add-new">
+                    <button class="action-button button-add-new" (click)="addPhoneNumber()">
                         <i class="fa fa-plus" aria-hidden="true"></i> Add
                     </button>
                 </section>
@@ -88,7 +98,8 @@
 
         <div class="action-section">
             <button class="action-button button-grey pull-left" (click)="navigateBack()">Cancel</button>
-            <button class="action-button button-green" [disabled]="contactDataFormGroup.invalid" (click)="saveContact()">Save</button>
+            <button class="action-button button-green" [disabled]="contactDataFormGroup.invalid"
+                (click)="saveContact()">Save</button>
         </div>
     </div>
 </div>

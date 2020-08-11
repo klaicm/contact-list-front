@@ -68,63 +68,60 @@
             <div class="data-area">
                 <span class="channel-of-contact"><i class="fa fa-phone icon-right-margin"
                         aria-hidden="true"></i>phones</span>
-                <section>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Broj telefona" formControlName="phoneNumberHomeFormControl">
+                <div @enterLeaveTriggerFavoriteContacts formArrayName="phoneNumbers"
+                    *ngFor="let phone of contactDataFormGroup.get('phoneNumbers').controls; let i = index;">
+                    <div [formGroupName]="i">
+                        <section>
+                            <div class="input-field" style="display: inline-block">
+                                <input placeholder="Broj telefona" formControlName="phoneNumber">
+                            </div>
+                            <div class="input-field" style="display: inline-block">
+                                <input placeholder="Lokacija" formControlName="phoneDescription">
+                            </div>
+                            <div style="display: inline-block">
+                                <i class="fa fa-times icon-left-margin icon-interactive" aria-hidden="true"
+                                    (click)="removeNumber(i)"></i>
+                            </div>
+                        </section>
+                        <section>
+                            <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.invalid && 
+                        (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.touched 
+                        || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.dirty)"
+                                class="val-error">
+                                <span
+                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.required"> Phone
+                                    number is
+                                    required </span>
+                                <span
+                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.pattern"> Wrong
+                                    format </span>
+                                <span
+                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.maxlength"> Too
+                                    long </span>
+                            </div>
+                        </section>
+                        <section>
+                            <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.invalid && 
+                        (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.touched 
+                        || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.dirty)"
+                                class="val-error">
+                                <span
+                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.required"> Phone
+                                    description is
+                                    required </span>
+                                <span
+                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.pattern"> Wrong
+                                    format </span>
+                                <span
+                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.maxlength"> Too
+                                    long </span>
+                            </div>
+                        </section>
                     </div>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Lokacija">
-                    </div>
-                    <div style="display: inline-block">
-                        <i class="fa fa-times icon-left-margin icon-interactive" aria-hidden="true"></i>
-                    </div>
-                </section>
-                <div @dropErrMsg
-                    *ngIf="contactDataFormGroup.get('phoneNumberHomeFormControl').invalid && 
-                    (contactDataFormGroup.get('phoneNumberHomeFormControl').touched || contactDataFormGroup.get('phoneNumberHomeFormControl').dirty)"
-                    class="val-error">
-                    <span *ngIf="contactDataFormGroup.get('phoneNumberHomeFormControl').errors.required">Phone number is
-                        required.</span>
-                    <span *ngIf="contactDataFormGroup.get('phoneNumberHomeFormControl').errors.pattern">Wrong
-                        format</span>
-                    <span *ngIf="contactDataFormGroup.get('phoneNumberHomeFormControl').errors.maxlength">Too
-                        long</span>
                 </div>
+
                 <section>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Broj telefona" formControlName="phoneNumberHomeFormControl">
-                    </div>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Lokacija">
-                    </div>
-                    <div style="display: inline-block">
-                        <i class="fa fa-times icon-left-margin icon-interactive" aria-hidden="true"></i>
-                    </div>
-                </section>
-                <section>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Broj telefona" formControlName="phoneNumberHomeFormControl">
-                    </div>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Lokacija">
-                    </div>
-                    <div style="display: inline-block">
-                        <i class="fa fa-times icon-left-margin icon-interactive" aria-hidden="true"></i>
-                    </div>
-                </section>
-                <section>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Broj telefona" formControlName="phoneNumberHomeFormControl">
-                    </div>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Lokacija">
-                    </div>
-                    <div style="display: inline-block">
-                        <i class="fa fa-times icon-left-margin icon-interactive" aria-hidden="true"></i>
-                    </div>
-                </section>
-                <section>
-                    <button class="action-button button-add-new">
+                    <button class="action-button button-add-new" (click)="addPhoneNumber()">
                         <i class="fa fa-plus" aria-hidden="true"></i> Add
                     </button>
                 </section>
@@ -133,7 +130,8 @@
 
         <div class="action-section">
             <button class="action-button button-grey pull-left" (click)="navigateBack()">Cancel</button>
-            <button class="action-button button-green" [disabled]="contactDataFormGroup.invalid" (click)="saveContact()">Save</button>
+            <button class="action-button button-green" [disabled]="contactDataFormGroup.invalid"
+                (click)="saveContact()">Save</button>
         </div>
     </div>
 </div>

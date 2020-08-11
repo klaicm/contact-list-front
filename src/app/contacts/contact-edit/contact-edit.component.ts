@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactService } from '../services/contact.service';
 import { Contact } from '../models/contact.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialog/confirmation-dialog.component';
@@ -15,7 +15,8 @@ import { ConfirmationDialogComponent } from 'src/app/shared/dialog/confirmation-
     styleUrls: ['./contact-edit.component.css', '../../shared/styles/contact-data.component.css',
         '../../shared/styles/edit-add.component.css'],
     animations: [
-        Animations.enterLeaveTriggerFavoriteContacts
+        Animations.enterLeaveTriggerFavoriteContacts,
+        Animations.dropErrMsg
     ]
 })
 
@@ -27,25 +28,16 @@ export class ContactEditComponent implements OnInit, OnDestroy {
     isLoaded = false;
 
     contactDataFormGroup: FormGroup;
+    phoneNumbers: FormArray;
 
     constructor(private activatedRoute: ActivatedRoute, private contactService: ContactService, private _location: Location,
-        public dialog: MatDialog, private router: Router) {
+        public dialog: MatDialog, private router: Router, private formBuilder: FormBuilder) {
 
-        this.contactDataFormGroup = new FormGroup({
+        this.contactDataFormGroup = this.formBuilder.group({
             firstNameFormControl: new FormControl('', Validators.required),
             lastNameFormControl: new FormControl('', Validators.required),
             emailFormControl: new FormControl('', [Validators.required, Validators.email]),
-            phoneNumberHomeFormControl: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$'),
-            Validators.maxLength(10)]),
-            phoneNumberWorkFormControl: new FormControl('', [
-                Validators.pattern('^[0-9]*$'),
-                Validators.maxLength(10)]),
-            phoneNumberCellFormControl: new FormControl('', [
-                Validators.pattern('^[0-9]*$'),
-                Validators.maxLength(10)]),
-            phoneNumberHusbandFormControl: new FormControl('', [
-                Validators.pattern('^[0-9]*$'),
-                Validators.maxLength(10)])
+            phoneNumbers: this.formBuilder.array([])
         });
 
     }
@@ -53,6 +45,33 @@ export class ContactEditComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.getContactDetails(+params['id']);
+        });
+    }
+
+    createPhoneNumber(): FormGroup {
+        return this.formBuilder.group({
+            phoneNumber: new FormControl('', [
+                Validators.pattern('^[0-9]*$'),
+                Validators.maxLength(10)]),
+            phoneDescription: new FormControl('', Validators.maxLength(10))
+        });
+    }
+
+    addPhoneNumber() {
+        this.phoneNumbers = this.contactDataFormGroup.get('phoneNumbers') as FormArray;
+        this.phoneNumbers.push(this.createPhoneNumber());
+    }
+
+    removeNumber(i: number) {
+        this.phoneNumbers.removeAt(i);
+    }
+
+    setExistingPhoneNumber(phoneNumber: String, phoneDescription: String) {
+        return this.formBuilder.group({
+            phoneNumber: new FormControl(phoneNumber, [
+                Validators.pattern('^[0-9]*$'),
+                Validators.maxLength(10)]),
+            phoneDescription: new FormControl(phoneDescription, Validators.maxLength(10))
         });
     }
 
@@ -72,13 +91,33 @@ export class ContactEditComponent implements OnInit, OnDestroy {
     }
 
     createFormGroup(contact: Contact) {
+
         this.contactDataFormGroup.get('firstNameFormControl').setValue(contact.firstName);
         this.contactDataFormGroup.get('lastNameFormControl').setValue(contact.lastName);
         this.contactDataFormGroup.get('emailFormControl').setValue(contact.email);
-        this.contactDataFormGroup.get('phoneNumberHomeFormControl').setValue(contact.phoneNumberHome);
-        this.contactDataFormGroup.get('phoneNumberWorkFormControl').setValue(contact.phoneNumberHome);
-        this.contactDataFormGroup.get('phoneNumberCellFormControl').setValue(contact.phoneNumberHome);
-        this.contactDataFormGroup.get('phoneNumberHusbandFormControl').setValue(contact.phoneNumberHome);
+
+        this.phoneNumbers = this.contactDataFormGroup.get('phoneNumbers') as FormArray;
+
+        let allPhoneNumbers = contact.phoneNumberHome;
+
+        const phnNmrsList = new Array<String>();
+        const phnNmrNmsList = new Array<String>();
+
+        while (allPhoneNumbers.length > 1) {
+            const phoneNumber = allPhoneNumbers.substring(allPhoneNumbers.indexOf('#') + 1,
+                allPhoneNumbers.indexOf('$'));
+            allPhoneNumbers = allPhoneNumbers.substring(allPhoneNumbers.indexOf('$'));
+            const phoneDescription = allPhoneNumbers.substring(allPhoneNumbers.indexOf('$') + 1,
+                allPhoneNumbers.indexOf('#'));
+
+
+            phnNmrsList.push(phoneNumber);
+            phnNmrNmsList.push(phoneDescription);
+            this.phoneNumbers.push(this.setExistingPhoneNumber(phoneNumber, phoneDescription));
+
+            allPhoneNumbers = allPhoneNumbers.substring(allPhoneNumbers.indexOf('#'));
+
+        }
     }
 
     saveContact() {
@@ -98,19 +137,23 @@ export class ContactEditComponent implements OnInit, OnDestroy {
                 contact.firstName = this.contactDataFormGroup.get('firstNameFormControl').value;
                 contact.lastName = this.contactDataFormGroup.get('lastNameFormControl').value;
                 contact.email = this.contactDataFormGroup.get('emailFormControl').value;
-                contact.firstName = this.contactDataFormGroup.get('firstNameFormControl').value;
-                contact.phoneNumberHome = this.contactDataFormGroup.get('phoneNumberHomeFormControl').value;
-                contact.phoneNumberCell = this.contactDataFormGroup.get('phoneNumberCellFormControl').value;
-                contact.phoneNumberWork = this.contactDataFormGroup.get('phoneNumberWorkFormControl').value;
-                contact.phoneNumberHusband = this.contactDataFormGroup.get('phoneNumberHusbandFormControl').value;
 
-                this.contactService.saveContact(contact).subscribe(response => {
-                    if (response) {
-                        this._location.back();
+                contact.phoneNumberHome = '';
+                this.phoneNumbers.controls.forEach((a) => {
+                    if (a.get('phoneNumber').value) {
+                        contact.phoneNumberHome = contact.phoneNumberHome + '#' + a.get('phoneNumber').value + '$'
+                            + a.get('phoneDescription').value;
                     }
                 });
-            } else {
-                console.log('Canceled');
+                contact.phoneNumberHome = contact.phoneNumberHome + '#';
+
+                console.log(contact.phoneNumberHome);
+
+                // this.contactService.saveContact(contact).subscribe(response => {
+                //     if (response) {
+                //         this._location.back();
+                //     }
+                // });
             }
         });
     }

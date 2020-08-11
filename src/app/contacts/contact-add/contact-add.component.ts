@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Animations } from 'src/app/shared/animations/animations';
 import { ContactService } from '../services/contact.service';
 import { Contact } from '../models/contact.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialog/confirmation-dialog.component';
@@ -25,34 +25,39 @@ export class ContactAddComponent implements OnInit {
     isLoaded = true;
 
     contactDataFormGroup: FormGroup;
+    phoneNumbers: FormArray;
 
-    constructor(private contactService: ContactService, private _location: Location, public dialog: MatDialog) {
-    }
+    constructor(private contactService: ContactService, private _location: Location, public dialog: MatDialog,
+        private formBuilder: FormBuilder) { }
 
     ngOnInit() {
-        this.contactDataFormGroup = this.createFormGroup();
-    }
-
-    createFormGroup(): FormGroup {
-        const contactDataFormGroup = new FormGroup({
+        this.contactDataFormGroup = this.formBuilder.group({
             firstNameFormControl: new FormControl('', Validators.required),
             lastNameFormControl: new FormControl('', Validators.required),
             emailFormControl: new FormControl('', [Validators.required, Validators.email]),
-            phoneNumberHomeFormControl: new FormControl('', [Validators.required,
-            Validators.pattern('^[0-9]*$'),
-            Validators.maxLength(10)]),
-            phoneNumberWorkFormControl: new FormControl('', [
+            phoneNumbers: this.formBuilder.array([this.createPhoneNumber()])
+        });
+    }
+
+    createPhoneNumber(): FormGroup {
+        return this.formBuilder.group({
+            phoneNumber: new FormControl('', [
+                Validators.required,
                 Validators.pattern('^[0-9]*$'),
                 Validators.maxLength(10)]),
-            phoneNumberCellFormControl: new FormControl('', [
-                Validators.pattern('^[0-9]*$'),
-                Validators.maxLength(10)]),
-            phoneNumberHusbandFormControl: new FormControl('', [
-                Validators.pattern('^[0-9]*$'),
+            phoneDescription: new FormControl('', [
+                Validators.required,
                 Validators.maxLength(10)])
         });
+    }
 
-        return contactDataFormGroup;
+    addPhoneNumber() {
+        this.phoneNumbers = this.contactDataFormGroup.get('phoneNumbers') as FormArray;
+        this.phoneNumbers.push(this.createPhoneNumber());
+    }
+
+    removeNumber(i: number) {
+        this.phoneNumbers.removeAt(i);
     }
 
     saveContact() {
@@ -73,12 +78,19 @@ export class ContactAddComponent implements OnInit {
                 contact.lastName = this.contactDataFormGroup.get('lastNameFormControl').value;
                 contact.email = this.contactDataFormGroup.get('emailFormControl').value;
                 contact.firstName = this.contactDataFormGroup.get('firstNameFormControl').value;
-                contact.phoneNumberHome = this.contactDataFormGroup.get('phoneNumberHomeFormControl').value;
-                contact.phoneNumberCell = this.contactDataFormGroup.get('phoneNumberCellFormControl').value;
-                contact.phoneNumberWork = this.contactDataFormGroup.get('phoneNumberWorkFormControl').value;
-                contact.phoneNumberHusband = this.contactDataFormGroup.get('phoneNumberHusbandFormControl').value;
                 contact.isFavorite = false;
                 contact.profilePhoto = '../../assets/images/forrest_gump.jpg';
+
+                contact.phoneNumberHome = '';
+                this.phoneNumbers.controls.forEach((a) => {
+                    if (a.get('phoneNumber').value) {
+                        contact.phoneNumberHome = contact.phoneNumberHome + '#' + a.get('phoneNumber').value + '$'
+                            + a.get('phoneDescription').value;
+                    }
+                });
+                if (contact.phoneNumberHome !== '') {
+                    contact.phoneNumberHome = contact.phoneNumberHome + '#';
+                }
 
                 this.contactService.saveContact(contact).subscribe(response => {
                     if (response) {
