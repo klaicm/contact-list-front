@@ -51,9 +51,12 @@ export class ContactEditComponent implements OnInit, OnDestroy {
     createPhoneNumber(): FormGroup {
         return this.formBuilder.group({
             phoneNumber: new FormControl('', [
+                Validators.required,
                 Validators.pattern('^[0-9]*$'),
                 Validators.maxLength(10)]),
-            phoneDescription: new FormControl('', Validators.maxLength(10))
+            phoneDescription: new FormControl('', [
+                Validators.required,
+                Validators.maxLength(10)])
         });
     }
 
@@ -98,10 +101,7 @@ export class ContactEditComponent implements OnInit, OnDestroy {
 
         this.phoneNumbers = this.contactDataFormGroup.get('phoneNumbers') as FormArray;
 
-        let allPhoneNumbers = contact.phoneNumberHome;
-
-        const phnNmrsList = new Array<String>();
-        const phnNmrNmsList = new Array<String>();
+        let allPhoneNumbers = contact.phoneNumbers;
 
         while (allPhoneNumbers.length > 1) {
             const phoneNumber = allPhoneNumbers.substring(allPhoneNumbers.indexOf('#') + 1,
@@ -110,9 +110,6 @@ export class ContactEditComponent implements OnInit, OnDestroy {
             const phoneDescription = allPhoneNumbers.substring(allPhoneNumbers.indexOf('$') + 1,
                 allPhoneNumbers.indexOf('#'));
 
-
-            phnNmrsList.push(phoneNumber);
-            phnNmrNmsList.push(phoneDescription);
             this.phoneNumbers.push(this.setExistingPhoneNumber(phoneNumber, phoneDescription));
 
             allPhoneNumbers = allPhoneNumbers.substring(allPhoneNumbers.indexOf('#'));
@@ -138,16 +135,16 @@ export class ContactEditComponent implements OnInit, OnDestroy {
                 contact.lastName = this.contactDataFormGroup.get('lastNameFormControl').value;
                 contact.email = this.contactDataFormGroup.get('emailFormControl').value;
 
-                contact.phoneNumberHome = '';
+                contact.phoneNumbers = '';
                 this.phoneNumbers.controls.forEach((a) => {
                     if (a.get('phoneNumber').value) {
-                        contact.phoneNumberHome = contact.phoneNumberHome + '#' + a.get('phoneNumber').value + '$'
+                        contact.phoneNumbers = contact.phoneNumbers + '#' + a.get('phoneNumber').value + '$'
                             + a.get('phoneDescription').value;
                     }
                 });
-                contact.phoneNumberHome = contact.phoneNumberHome + '#';
+                contact.phoneNumbers = contact.phoneNumbers + '#';
 
-                console.log(contact.phoneNumberHome);
+                console.log(contact.phoneNumbers);
 
                 // this.contactService.saveContact(contact).subscribe(response => {
                 //     if (response) {

@@ -81,15 +81,15 @@ export class ContactAddComponent implements OnInit {
                 contact.isFavorite = false;
                 contact.profilePhoto = '../../assets/images/forrest_gump.jpg';
 
-                contact.phoneNumberHome = '';
+                contact.phoneNumbers = '';
                 this.phoneNumbers.controls.forEach((a) => {
                     if (a.get('phoneNumber').value) {
-                        contact.phoneNumberHome = contact.phoneNumberHome + '#' + a.get('phoneNumber').value + '$'
+                        contact.phoneNumbers = contact.phoneNumbers + '#' + a.get('phoneNumber').value + '$'
                             + a.get('phoneDescription').value;
                     }
                 });
-                if (contact.phoneNumberHome !== '') {
-                    contact.phoneNumberHome = contact.phoneNumberHome + '#';
+                if (contact.phoneNumbers !== '') {
+                    contact.phoneNumbers = contact.phoneNumbers + '#';
                 }
 
                 this.contactService.saveContact(contact).subscribe(response => {

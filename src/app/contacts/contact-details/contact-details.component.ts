@@ -21,6 +21,7 @@ export class ContactDetailsComponent implements OnInit, OnDestroy {
     contact: Contact;
     // this will be used for loader
     isLoaded = false;
+    phoneNumbersMap = new Map<String, String>();
 
     constructor(private activatedRoute: ActivatedRoute, private contactService: ContactService, private router: Router,
         private _location: Location) { }
@@ -35,6 +36,21 @@ export class ContactDetailsComponent implements OnInit, OnDestroy {
         this.contactService.getContactById(contactId).subscribe((response: Contact) => {
             this.isLoaded = true;
             this.contact = response;
+
+            let allPhoneNumbers = this.contact.phoneNumbers;
+
+            while (allPhoneNumbers.length > 1) {
+                const phoneNumber = allPhoneNumbers.substring(allPhoneNumbers.indexOf('#') + 1,
+                    allPhoneNumbers.indexOf('$'));
+                allPhoneNumbers = allPhoneNumbers.substring(allPhoneNumbers.indexOf('$'));
+                const phoneDescription = allPhoneNumbers.substring(allPhoneNumbers.indexOf('$') + 1,
+                    allPhoneNumbers.indexOf('#'));
+
+                this.phoneNumbersMap.set(phoneDescription.toLocaleUpperCase(), phoneNumber);
+
+                allPhoneNumbers = allPhoneNumbers.substring(allPhoneNumbers.indexOf('#'));
+
+            }
         });
     }
 

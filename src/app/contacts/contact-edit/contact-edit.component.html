@@ -83,7 +83,48 @@
                                 <input placeholder="Lokacija" formControlName="phoneDescription">
                             </div>
                             <div style="display: inline-block">
-                                <i class="fa fa-times icon-left-margin icon-interactive" aria-hidden="true" (click)="removeNumber(i)"></i>
+                                <i class="fa fa-times icon-left-margin icon-interactive" aria-hidden="true"
+                                    (click)="removeNumber(i)"></i>
+                            </div>
+                        </section>
+                        <section>
+                            <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.invalid && 
+                        (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.touched 
+                        || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.dirty)"
+                                class="val-error">
+                                <span
+                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.required">
+                                    Phone
+                                    number is
+                                    required </span>
+                                <span
+                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.pattern">
+                                    Wrong
+                                    format </span>
+                                <span
+                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.maxlength">
+                                    Too
+                                    long </span>
+                            </div>
+                        </section>
+                        <section>
+                            <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.invalid && 
+                        (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.touched 
+                        || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.dirty)"
+                                class="val-error">
+                                <span
+                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.required">
+                                    Phone
+                                    description is
+                                    required </span>
+                                <span
+                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.pattern">
+                                    Wrong
+                                    format </span>
+                                <span
+                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.maxlength">
+                                    Too
+                                    long </span>
                             </div>
                         </section>
                     </div>
