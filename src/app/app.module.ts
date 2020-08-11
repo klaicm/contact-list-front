@@ -14,6 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactAddComponent } from './contacts/contact-add/contact-add.component';
 import { ConfirmationDialogComponent } from './shared/dialog/confirmation-dialog.component';
 import { MatDialogModule } from '@angular/material';
+import { SharedDataService } from './contacts/services/shared-data.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -32,20 +34,15 @@ import { MatDialogModule } from '@angular/material';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule
   ],
   providers: [
-    ContactService
+    ContactService,
+    SharedDataService
   ],
   bootstrap: [
-    AppComponent,
-    ContactListAllComponent,
-    ContactDetailsComponent,
-    ContactListFavoritesComponent,
-    ContactListMainComponent,
-    ContactEditComponent,
-    ContactAddComponent,
-    ConfirmationDialogComponent
+    AppComponent
   ],
   entryComponents: [
     ConfirmationDialogComponent

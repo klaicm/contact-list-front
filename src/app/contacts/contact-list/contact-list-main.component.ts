@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Animations } from 'src/app/shared/animations/animations';
 import { FormControl } from '@angular/forms';
-import { ContactService } from '../services/contact.service';
-import { Observable } from 'rxjs';
 import { Contact } from '../models/contact.model';
 import { map, startWith } from 'rxjs/operators';
+import { SharedDataService } from '../services/shared-data.service';
+import { ContactService } from '../services/contact.service';
 
 @Component({
     selector: 'app-contact-list-main',
@@ -17,46 +16,52 @@ import { map, startWith } from 'rxjs/operators';
     ]
 })
 
-export class ContactListMainComponent implements OnInit {
+export class ContactListMainComponent implements OnInit, AfterViewInit {
 
     isAllContacts = true;
     isFavorites = false;
     searchFormControl = new FormControl();
-    filteredOptionsList: Observable<string[]>;
     allContactsList = new Array<Contact>();
+    isLoaded = false;
 
-    constructor(private router: Router, private contactService: ContactService) { }
+    constructor(private sharedDataService: SharedDataService, private contactService: ContactService) { }
 
     ngOnInit() {
-        this.contactService.tempList.subscribe(response => {
-            const contactList = response;
-            this.allContactsList = contactList;
-        });
-
-        this.contactService.tempList = this.searchFormControl.valueChanges
+        this.sharedDataService.filteringList = this.searchFormControl.valueChanges
             .pipe(
                 startWith(''),
                 map(value => this._filter(value)));
+    }
+
+    ngAfterViewInit() {
+        this.sharedDataService.getCurrentContactList().subscribe(response => {
+            this.allContactsList = response;
+        });
     }
 
     private _filter(value: any): any[] {
         const filterValue = value;
         return this.allContactsList.filter(option =>
             (option.firstName.toLowerCase().includes(filterValue.toLowerCase())
-            || option.lastName.toLowerCase().includes(filterValue.toLowerCase()))
+                || option.lastName.toLowerCase().includes(filterValue.toLowerCase()))
         );
+    }
+
+    get updatedList(): Array<Contact> {
+        this.sharedDataService.getCurrentContactList().subscribe(response => {
+            return response;
+        });
+        return [];
     }
 
     navigateToContacts(page: string) {
         if (page === 'all') {
-            // this.router.navigate(['/contact-list-all']);
             this.isFavorites = false;
 
             setTimeout(() => {
                 this.isAllContacts = true;
             }, 200);
         } else {
-            // this.router.navigate(['/contact-list-favorites']);
             this.isAllContacts = false;
 
             setTimeout(() => {

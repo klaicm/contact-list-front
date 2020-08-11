@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Contact } from '../../models/contact.model';
 import { ContactService } from '../../services/contact.service';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material';
 import { Animations } from 'src/app/shared/animations/animations';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
     selector: 'app-contact-list-favorites',
@@ -15,23 +16,22 @@ import { Animations } from 'src/app/shared/animations/animations';
     ]
 })
 
-export class ContactListFavoritesComponent implements OnInit {
-
-    @Input() allContacts: Array<Contact>;
-    oscar = '../../assets/images/oscar_arnold.png';
-    agnes = '../../assets/images/agnes_terry.jpg';
-    addie = '../../assets/images/addie_hernandez.jpg';
+export class ContactListFavoritesComponent implements OnInit, AfterViewInit {
 
     favoriteContacts = new Array<Contact>();
 
-    constructor(private contactServce: ContactService, private router: Router, public dialog: MatDialog,
-        private contactService: ContactService) { }
+    constructor(private sharedDataService: SharedDataService, private router: Router, public dialog: MatDialog,
+        private contactService: ContactService, private cdRef: ChangeDetectorRef) { }
 
     ngOnInit() {
-        this.contactServce.tempList.subscribe(response => {
-            const allContacts = response;
-            this.favoriteContacts = allContacts.filter(a => a.isFavorite);
-            console.log(this.favoriteContacts);
+        this.sharedDataService.getCurrentContactList().subscribe((allContactsResponse: Array<Contact>) => {
+            this.favoriteContacts = allContactsResponse.filter(a => a.isFavorite);
+        });
+    }
+
+    ngAfterViewInit() {
+        this.sharedDataService.filteringList.subscribe((allContactsResponse: Array<Contact>) => {
+            this.favoriteContacts = allContactsResponse.filter(a => a.isFavorite);
         });
     }
 
@@ -43,7 +43,7 @@ export class ContactListFavoritesComponent implements OnInit {
         this.router.navigate(['/contact-edit', contactId]);
     }
 
-    deleteContact(contactId: number) {
+    deleteContact(contact: Contact) {
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             data: {
                 message: 'Are you sure you want to delete this contact?',
@@ -55,37 +55,29 @@ export class ContactListFavoritesComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result === true) {
-                let contact = new Contact();
-                this.contactService.tempList.subscribe(response => {
-                    const contactList: Array<Contact> = response;
-                    contact = contactList[contactList.findIndex((a: Contact) => a.id === contactId)];
-
-                    if (contact) {
-                        this.contactService.removeContact(contact);
-
-                        this.contactService.tempList.subscribe(contactsAfterDelete => {
-                            this.favoriteContacts = contactsAfterDelete;
-                        });
-                    }
+                this.contactService.deleteContact(contact).subscribe(() => {
+                    this.contactService.getAllContacts().subscribe(allContactsResponse => {
+                        this.sharedDataService.updateContactList(allContactsResponse);
+                    });
                 });
-            } else {
-                console.log('Canceled');
             }
         });
     }
 
     editFavorites(contactId: number) {
-        const contact = this.contactService.getContactById(contactId);
-
-        if (contact) {
-
-            contact.isFavorite = !contact.isFavorite;
-            this.contactService.editContact(contact);
-
-            this.contactService.tempList.subscribe(contactsAfterDelete => {
-                this.favoriteContacts = contactsAfterDelete.filter(a => a.isFavorite);
-            });
-        }
+        this.contactService.getContactById(contactId).subscribe((response: Contact) => {
+            const contact = response;
+            if (contact) {
+                contact.isFavorite = !contact.isFavorite;
+                this.contactService.saveContact(contact).subscribe(responseSave => {
+                    if (responseSave) {
+                        this.contactService.getAllContacts().subscribe(allContactsResponse => {
+                            this.sharedDataService.updateContactList(allContactsResponse);
+                        });
+                    }
+                });
+            }
+        });
     }
 
     setHeartIconClass(isFavorite: boolean) {

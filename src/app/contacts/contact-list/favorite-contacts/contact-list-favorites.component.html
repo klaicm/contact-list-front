@@ -6,7 +6,7 @@
 
         <div class="icon-right">
             <i class="fa fa-pencil icon-interactive" aria-hidden="true" (click)="navigateToContactEdit(contact.id)"></i>
-            <i class="fa fa-trash icon-interactive trash-icon-margin" aria-hidden="true" (click)="deleteContact(contact.id)"></i>
+            <i class="fa fa-trash icon-interactive trash-icon-margin" aria-hidden="true" (click)="deleteContact(contact)"></i>
         </div>
         <div class="contact-name">
             <div class="image-cropper" (click)="navigateToContactDetails(contact.id)"><img class="rounded" [src]="contact.profilePhoto" />
