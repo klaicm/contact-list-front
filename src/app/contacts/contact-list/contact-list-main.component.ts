@@ -24,7 +24,7 @@ export class ContactListMainComponent implements OnInit, AfterViewInit {
     allContactsList = new Array<Contact>();
     isLoaded = false;
 
-    constructor(private sharedDataService: SharedDataService, private contactService: ContactService) { }
+    constructor(private sharedDataService: SharedDataService) { }
 
     ngOnInit() {
         this.sharedDataService.filteringList = this.searchFormControl.valueChanges

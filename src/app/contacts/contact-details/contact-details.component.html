@@ -1,44 +1,113 @@
-<div @enterLeaveTriggerFavoriteContacts *ngIf="isLoaded" class="container" style="margin-top: 64px;">
-    <div class="col-xs-4">
-        <div class="image-cropper pull-right">
-            <img class="rounded" [src]="contact.profilePhoto" />
+<div @enterLeaveTriggerFavoriteContacts *ngIf="isLoaded" class="container">
+    <div class="hide-mobile" style="margin-top: 64px;">
+        <div class="col-xs-4">
+            <div class="image-cropper pull-right">
+                <img class="rounded" [src]="contact.profilePhoto" />
+            </div>
+        </div>
+        <div class="col-xs-8">
+            <div class="contact-name">
+                <div class="icon-left">
+                    <i class="fa fa-arrow-left icon-interactive" aria-hidden="true" (click)="navigateBack()"></i>
+                    {{contact.firstName}} {{contact.lastName}}
+                </div>
+
+                <div class="icon-right">
+                    <i [ngClass]="setHeartIconClass(contact.isFavorite)" aria-hidden="true"
+                        (click)="changeIsFavorite()"></i>
+                    <i class="fa fa-pencil icon-interactive icon-left-margin" aria-hidden="true"
+                        (click)="navigateToContactEdit(contact.id)"></i>
+                </div>
+            </div>
+
+            <div style="margin-top: 32px;">
+                <table>
+                    <tr>
+                        <td class="channel-of-contact"><i class="fa fa-envelope-o icon-right-margin"
+                                aria-hidden="true"></i>email</td>
+                        <td class="contact-data" style="padding-left: 16px;">{{contact.email}}</td>
+                    </tr>
+                    <tr>
+                        <td class="channel-of-contact"><i class="fa fa-phone icon-right-margin"
+                                aria-hidden="true"></i>numbers</td>
+                        <td>
+                            <table>
+                                <tr *ngFor="let phoneNumber of phoneNumbersMap | keyvalue">
+                                    <td class="contact-data">{{phoneNumber.key}}</td>
+                                    <td class="contact-data">{{phoneNumber.value}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
-    <div class="col-xs-8">
-        <div class="contact-name">
-            <div class="icon-left">
-                <i class="fa fa-arrow-left icon-interactive" aria-hidden="true" (click)="navigateBack()"></i>
-                {{contact.firstName}} {{contact.lastName}}
+
+    <div class="show-mobile" style="margin-top: 12px;">
+        <div class="details-icons-header">
+            <div class="mobile-details-header-icons-left">
+                <i class="fa fa-arrow-left icon-interactive pull-left" aria-hidden="true" (click)="navigateBack()"></i>
+            </div>
+            <div class="mobile-details-header-icons-right">
+
+                <i class="fa fa-pencil icon-interactive icon-left-margin pull-right" aria-hidden="true"
+                    (click)="navigateToContactEdit(contact.id)"></i>
+                <i [ngClass]="setHeartIconClass(contact.isFavorite)" class="pull-right" aria-hidden="true"
+                    (click)="changeIsFavorite()"></i>
             </div>
 
-            <div class="icon-right">
-                <i [ngClass]="setHeartIconClass(contact.isFavorite)" aria-hidden="true"
-                    (click)="changeIsFavorite()"></i>
-                <i class="fa fa-pencil icon-interactive icon-left-margin" aria-hidden="true"
-                    (click)="navigateToContactEdit(contact.id)"></i>
+        </div>
+
+        <div class="details-divider"></div>
+
+        <div style="width: 100%;">
+            <div class="image-cropper">
+                <img class="rounded" [src]="contact.profilePhoto" />
+            </div>
+            <div class="contact-name pull-right">
+                <div>
+                    {{contact.firstName}} {{contact.lastName}}
+                </div>
+
+
             </div>
         </div>
 
-        <div style="margin-top: 32px;">
-            <table>
-                <tr>
-                    <td class="channel-of-contact"><i class="fa fa-envelope-o icon-right-margin"
-                            aria-hidden="true"></i>email</td>
-                    <td class="contact-data" style="padding-left: 16px;">{{contact.email}}</td>
-                </tr>
-                <tr>
-                    <td class="channel-of-contact"><i class="fa fa-phone icon-right-margin"
-                            aria-hidden="true"></i>numbers</td>
-                    <td>
-                        <table>
-                            <tr *ngFor="let phoneNumber of phoneNumbersMap | keyvalue">
-                                <td class="contact-data">{{phoneNumber.key}}</td>
-                                <td class="contact-data">{{phoneNumber.value}}</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+        <div class="details-divider-name"></div>
+        <div>
+            <div style="margin-top: 32px;">
+                <table>
+                    <tr>
+                        <td class="icon-column"><i class="fa fa-envelope-o"
+                                aria-hidden="true"></i></td>
+                        <td class="icon-column">email</td>
+
+                    </tr>
+                    <tr>
+                        <td class="icon-column"></td>
+                        <td class="contact-data contact-data-mail">{{contact.email}}</td>
+                    </tr>
+                    <tr>
+                        <td class="icon-column">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                        </td>
+                        <td class="icon-column">numbers</td>
+                    </tr>
+                    <tr>
+                        <td class="icon-column"></td>
+                        <td>
+                            <table>
+                                <tr *ngFor="let phoneNumber of phoneNumbersMap | keyvalue">
+                                    <td class="contact-data">{{phoneNumber.key}}</td>
+                                    <td class="contact-data">{{phoneNumber.value}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -44,7 +44,7 @@
 }
 
 .search-field {
-    width: 30%;
+    width: 40%;
     border: 1px solid lightgrey;
     text-align: left;
     padding: 12px;
@@ -53,6 +53,7 @@
     border-radius: 5px;
     display: inline-block;
     transition: box-shadow 0.1s ease-in-out;
+    box-shadow: 0 2px 34px 0 #E3E3E3;
 }
 
 .search-field:focus-within {

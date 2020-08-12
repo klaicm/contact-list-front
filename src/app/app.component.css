@@ -1,9 +1,7 @@
 .app-body {
     background-color: white;
     text-align: center; 
-    margin-left: 32px; 
-    margin-right: 32px;
-    margin-bottom: 128px;
+    margin-bottom: 64px;
     font-family: 'Lato';
 }
 
@@ -29,6 +27,12 @@
     bottom: 0; 
   }
 
+.logo {
+    height: 20px;
+    width: 180px;
+    margin-bottom: 8px;
+}
+
 
 @media only screen and (max-width: 600px) {
 
@@ -36,7 +40,7 @@
         background-color: white;
         text-align: center; 
         font-family: 'Lato';
-        margin-bottom: 128px;
+        margin-bottom: 25px;
         margin-left: 0px; 
         margin-right: 0px;
     }
@@ -49,6 +53,12 @@
         color: white;
         font-size: 18px;
         height: 60px;
+    }
+
+    .logo {
+        height: 15px;
+        width: 140px;
+        margin-bottom: 0px;
     }
 
 }
