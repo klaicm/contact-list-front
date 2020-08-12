@@ -27,14 +27,11 @@
 }
 
 .add-new-contact-div {
-    border: 1.3px dashed lightgrey;
-    border-radius: 3px;
-    padding: 16px;
-    height: 140px;
+    border: 1px dashed lightgrey;
 }
 
 .add-new-contact-div:hover {
-    border: 1.3px dashed rgba(0, 153, 153, .8);
+    border: 1px dashed rgba(0, 153, 153, .8);
     cursor: pointer;
 }
 
@@ -43,11 +40,15 @@
     color: rgba(0, 153, 153, .8);
 }
 
+.add-new-name {
+    padding-top: 32px;
+}
+
 .contact-name {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: 600;
+    font-weight: bold;
     color: lightgrey;
     font-size: 18px;
     transition: color 0.2s;
@@ -97,4 +98,78 @@ img {
     margin: 0 auto;
     height: 100%;
     width: auto;
+}
+
+.show-mobile {
+    display: none;
+}
+
+.hide-mobile {
+    display: block;
+}
+
+@media only screen and (max-width: 600px) {
+
+    .contacts-body {
+        margin-top: 32px; 
+        text-align: center;
+    }
+
+    .contact-div {
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+        height: 40px;
+        transition: border 0.2s;
+        padding: 4px;
+    }
+
+    .contact-name {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        color: lightgrey;
+        font-size: 12px;
+        transition: color 0.2s;
+        
+    }
+
+    .add-new-contact-div {
+        border: 1px dashed #2DA1AD;
+    }
+
+    .add-new-name {
+        padding-top: 8px;
+    }
+
+    .image-cropper {
+        width: 30px;
+        height: 30px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+        border: 2px solid lightgrey;
+        margin-bottom: 0px;
+        margin-right: 8px;
+    }
+
+    .icon-interactive {
+        color: lightgrey;
+        font-size: 11px;
+        padding-right: 8px;
+    }
+
+    .show-mobile {
+        display: block;
+    }
+      
+    .hide-mobile {
+        display: none;
+    }
+
+    .div-padding {
+        padding-top: 15px;
+        padding-bottom: 0px;
+    }
+
 }

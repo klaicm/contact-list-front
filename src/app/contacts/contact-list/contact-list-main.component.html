@@ -1,6 +1,6 @@
 <div class="contact-list-body">
 
-    <div style="margin-top: 32px; margin-bottom: 32px;">
+    <div class="contact-types-links">
         <a [ngClass]="isAllContacts ? 'contact-type-active-link' : 'contact-type-link'"
             (click)="navigateToContacts('all')">All contacts</a>
         <span class="contact-type-divider"></span>
@@ -8,9 +8,12 @@
             (click)="navigateToContacts('favorite')">My favorites</a>
     </div>
 
+    <div class="show-mobile">Mobile</div>
+    <div class="hide-mobile">Desktop</div>
+
     <div class="contact-list-divider"></div>
 
-    <div class="search-field">
+    <div class="search-field container">
         <i class="fa fa-search icon-search" aria-hidden="true"></i><input class="search-input" [formControl]="searchFormControl"/>
     </div>
 
