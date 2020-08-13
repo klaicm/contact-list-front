@@ -157,6 +157,7 @@ img {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-size: 12px;
     }
 
     .add-new-contact-div {
