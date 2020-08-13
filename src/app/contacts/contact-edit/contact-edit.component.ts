@@ -13,7 +13,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/dialog/confirmation-
     selector: 'app-contact-edit',
     templateUrl: './contact-edit.component.html',
     styleUrls: ['./contact-edit.component.css', '../../shared/styles/contact-data.component.css',
-        '../../shared/styles/edit-add.component.css'],
+        '../../shared/styles/edit-add.component.css', '../../shared/styles/contact-mobile.component.css'],
     animations: [
         Animations.enterLeaveTriggerFavoriteContacts,
         Animations.dropErrMsg
@@ -72,10 +72,19 @@ export class ContactEditComponent implements OnInit, OnDestroy {
     setExistingPhoneNumber(phoneNumber: String, phoneDescription: String) {
         return this.formBuilder.group({
             phoneNumber: new FormControl(phoneNumber, [
+                Validators.required,
                 Validators.pattern('^[0-9]*$'),
-                Validators.maxLength(10)]),
-            phoneDescription: new FormControl(phoneDescription, Validators.maxLength(10))
+                Validators.maxLength(10)
+            ]),
+            phoneDescription: new FormControl(phoneDescription, [
+                Validators.required,
+                Validators.maxLength(10)
+            ])
         });
+    }
+
+    addPhoto() {
+
     }
 
     getContactDetails(contactId: number) {

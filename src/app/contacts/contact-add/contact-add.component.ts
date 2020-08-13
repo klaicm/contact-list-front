@@ -60,6 +60,10 @@ export class ContactAddComponent implements OnInit {
         this.phoneNumbers.removeAt(i);
     }
 
+    addPhoto() {
+
+    }
+
     saveContact() {
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             data: {

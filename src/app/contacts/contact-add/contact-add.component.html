@@ -1,132 +1,301 @@
-<div @enterLeaveTriggerFavoriteContacts *ngIf="isLoaded" class="container" style="margin-top: 64px;">
-    <div class="col-xs-4">
-        <div class="image-cropper pull-right">
-            <img class="rounded" [src]="" />
-        </div>
-    </div>
-    <div class="col-xs-8">
-        <div class="contact-name">
-            <div class="icon-left">
-                <i class="fa fa-arrow-left icon-interactive" aria-hidden="true" (click)="navigateBack()"></i>
+<div @enterLeaveTriggerFavoriteContacts *ngIf="isLoaded" class="container">
+    <!-- MOBILE -->
+    <div class="hide-mobile" style="margin-top: 64px;">
+        <div class="col-xs-4">
+            <div class="image-cropper pull-right" (click)="addPhoto()">
+                <img class="rounded" />
+                <div class="image-cropper-text">
+                    <div class="text"><i class="fa fa-upload icon-interactive" aria-hidden="true"></i></div>
+                </div>
             </div>
         </div>
+        <div class="col-xs-8">
+            <div class="contact-name">
+                <div class="icon-left">
+                    <i class="fa fa-arrow-left icon-interactive" aria-hidden="true" (click)="navigateBack()"></i>
+                </div>
+            </div>
 
-        <form [formGroup]="contactDataFormGroup">
-            <div class="data-area">
-                <span class="channel-of-contact"><i class="fa fa-user-o icon-right-margin" aria-hidden="true"></i>full
-                    name</span>
-                <section>
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="First name" formControlName="firstNameFormControl">
-                    </div>
+            <form [formGroup]="contactDataFormGroup">
+                <div class="data-area">
+                    <span class="channel-of-contact"><i class="fa fa-user-o icon-right-margin"
+                            aria-hidden="true"></i>full
+                        name</span>
+                    <section>
+                        <div class="input-field" style="display: inline-block">
+                            <input placeholder="First name" formControlName="firstNameFormControl">
+                        </div>
 
-                    <div class="input-field" style="display: inline-block">
-                        <input placeholder="Last name" formControlName="lastNameFormControl">
-                    </div>
-                </section>
-                <section>
-                    <div @dropErrMsg
-                        *ngIf="contactDataFormGroup.get('firstNameFormControl').invalid && 
+                        <div class="input-field" style="display: inline-block">
+                            <input placeholder="Last name" formControlName="lastNameFormControl">
+                        </div>
+                    </section>
+                    <section>
+                        <div @dropErrMsg
+                            *ngIf="contactDataFormGroup.get('firstNameFormControl').invalid && 
                     (contactDataFormGroup.get('firstNameFormControl').touched || contactDataFormGroup.get('firstNameFormControl').dirty)"
-                        class="val-error">
-                        <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.required">First Name is
-                            required.</span>
-                    </div>
-                    <div @dropErrMsg
-                        *ngIf="contactDataFormGroup.get('lastNameFormControl').invalid && 
+                            class="val-error">
+                            <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.required">First Name is
+                                required.</span>
+                        </div>
+                        <div @dropErrMsg
+                            *ngIf="contactDataFormGroup.get('lastNameFormControl').invalid && 
                     (contactDataFormGroup.get('lastNameFormControl').touched || contactDataFormGroup.get('lastNameFormControl').dirty)"
-                        class="val-error">
-                        <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.required">Last name is
-                            required.</span>
-                    </div>
-                </section>
-            </div>
-
-            <div class="contact-list-divider"></div>
-
-            <div class="data-area">
-                <span class="channel-of-contact"><i class="fa fa-envelope-o icon-right-margin"
-                        aria-hidden="true"></i>email</span>
-                <section>
-                    <div class="input-field">
-                        <input class="email-input" placeholder="e-mail" formControlName="emailFormControl">
-                    </div>
-                    <div @dropErrMsg
-                        *ngIf="contactDataFormGroup.get('emailFormControl').invalid && 
-                    (contactDataFormGroup.get('emailFormControl').touched || contactDataFormGroup.get('emailFormControl').dirty)"
-                        class="val-error">
-                        <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.required">Mail is
-                            required.</span>
-                        <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.email">Mail not in right
-                            format.</span>
-                    </div>
-                </section>
-            </div>
-
-            <div class="contact-list-divider"></div>
-
-            <div class="data-area">
-                <span class="channel-of-contact"><i class="fa fa-phone icon-right-margin"
-                        aria-hidden="true"></i>phones</span>
-                <div @enterLeaveTriggerFavoriteContacts formArrayName="phoneNumbers"
-                    *ngFor="let phone of contactDataFormGroup.get('phoneNumbers').controls; let i = index;">
-                    <div [formGroupName]="i">
-                        <section>
-                            <div class="input-field" style="display: inline-block">
-                                <input placeholder="Broj telefona" formControlName="phoneNumber">
-                            </div>
-                            <div class="input-field" style="display: inline-block">
-                                <input placeholder="Lokacija" formControlName="phoneDescription">
-                            </div>
-                            <div style="display: inline-block">
-                                <i class="fa fa-times icon-left-margin icon-interactive" aria-hidden="true"
-                                    (click)="removeNumber(i)"></i>
-                            </div>
-                        </section>
-                        <section>
-                            <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.invalid && 
-                        (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.touched 
-                        || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.dirty)"
-                                class="val-error">
-                                <span
-                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.required"> Phone
-                                    number is
-                                    required </span>
-                                <span
-                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.pattern"> Wrong
-                                    format </span>
-                                <span
-                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.maxlength"> Too
-                                    long </span>
-                            </div>
-                        </section>
-                        <section>
-                            <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.invalid && 
-                        (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.touched 
-                        || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.dirty)"
-                                class="val-error">
-                                <span
-                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.required"> Phone
-                                    description is
-                                    required </span>
-                                <span
-                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.pattern"> Wrong
-                                    format </span>
-                                <span
-                                    *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.maxlength"> Too
-                                    long </span>
-                            </div>
-                        </section>
-                    </div>
+                            class="val-error">
+                            <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.required">Last name is
+                                required.</span>
+                        </div>
+                    </section>
                 </div>
 
-                <section>
-                    <button class="action-button button-add-new" (click)="addPhoneNumber()">
-                        <i class="fa fa-plus" aria-hidden="true"></i> Add
-                    </button>
-                </section>
+                <div class="contact-list-divider"></div>
+
+                <div class="data-area">
+                    <span class="channel-of-contact"><i class="fa fa-envelope-o icon-right-margin"
+                            aria-hidden="true"></i>email</span>
+                    <section>
+                        <div class="input-field">
+                            <input class="email-input" placeholder="e-mail" formControlName="emailFormControl">
+                        </div>
+                        <div @dropErrMsg
+                            *ngIf="contactDataFormGroup.get('emailFormControl').invalid && 
+                    (contactDataFormGroup.get('emailFormControl').touched || contactDataFormGroup.get('emailFormControl').dirty)"
+                            class="val-error">
+                            <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.required">Mail is
+                                required.</span>
+                            <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.email">Mail not in right
+                                format.</span>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="contact-list-divider"></div>
+
+                <div class="data-area">
+                    <span class="channel-of-contact"><i class="fa fa-phone icon-right-margin"
+                            aria-hidden="true"></i>phones</span>
+                    <div @enterLeaveTriggerFavoriteContacts formArrayName="phoneNumbers"
+                        *ngFor="let phone of contactDataFormGroup.get('phoneNumbers').controls; let i = index;">
+                        <div [formGroupName]="i">
+                            <section>
+                                <div class="input-field" style="display: inline-block">
+                                    <input placeholder="Broj telefona" formControlName="phoneNumber">
+                                </div>
+                                <div class="input-field" style="display: inline-block">
+                                    <input placeholder="Lokacija" formControlName="phoneDescription">
+                                </div>
+                                <div style="display: inline-block">
+                                    <i class="fa fa-times icon-left-margin icon-interactive" aria-hidden="true"
+                                        (click)="removeNumber(i)"></i>
+                                </div>
+                            </section>
+                            <section>
+                                <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.invalid && 
+                        (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.touched 
+                        || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.dirty)"
+                                    class="val-error">
+                                    <span
+                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.required">
+                                        Phone
+                                        number is
+                                        required </span>
+                                    <span
+                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.pattern">
+                                        Wrong
+                                        format </span>
+                                    <span
+                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.maxlength">
+                                        Too
+                                        long </span>
+                                </div>
+                            </section>
+                            <section>
+                                <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.invalid && 
+                        (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.touched 
+                        || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.dirty)"
+                                    class="val-error">
+                                    <span
+                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.required">
+                                        Phone
+                                        description is
+                                        required </span>
+                                    <span
+                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.pattern">
+                                        Wrong
+                                        format </span>
+                                    <span
+                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.maxlength">
+                                        Too
+                                        long </span>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <section>
+                        <button class="action-button button-add-new" (click)="addPhoneNumber()">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add
+                        </button>
+                    </section>
+                </div>
+            </form>
+
+            <div class="action-section">
+                <button class="action-button button-grey pull-left" (click)="navigateBack()">Cancel</button>
+                <button class="action-button button-green" [disabled]="contactDataFormGroup.invalid"
+                    (click)="saveContact()">Save</button>
             </div>
-        </form>
+        </div>
+    </div>
+
+    <!-- MOBILE -->
+    <div class="show-mobile" style="margin-top: 12px;">
+
+        <div class="details-icons-header">
+            <div class="mobile-details-header-icons-left">
+                <i class="fa fa-arrow-left icon-interactive pull-left" aria-hidden="true" (click)="navigateBack()"></i>
+            </div>
+            <div class="mobile-details-header-icons-right">
+            </div>
+        </div>
+
+        <div class="details-divider"></div>
+
+
+        <div class="image-cropper" (click)="addPhoto()">
+            <img class="rounded" />
+            <div class="image-cropper-text">
+                <div class="text"><i class="fa fa-upload icon-interactive" aria-hidden="true"></i></div>
+            </div>
+        </div>
+
+        <div class="contact-list-divider"></div>
+
+        <div>
+            <form [formGroup]="contactDataFormGroup">
+                <div class="data-area">
+                    <span class="channel-of-contact"><i class="fa fa-user-o icon-right-margin"
+                            aria-hidden="true"></i>full
+                        name</span>
+                    <section>
+                        <div style="width: 100%;">
+                            <div class="input-field">
+                                <input placeholder="First name" formControlName="firstNameFormControl">
+                            </div>
+                            <div class="input-field">
+                                <input placeholder="Last name" formControlName="lastNameFormControl">
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div @dropErrMsg
+                            *ngIf="contactDataFormGroup.get('firstNameFormControl').invalid && 
+                        (contactDataFormGroup.get('firstNameFormControl').touched || contactDataFormGroup.get('firstNameFormControl').dirty)"
+                            class="val-error">
+                            <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.required">First Name is
+                                required.</span>
+                        </div>
+                        <div @dropErrMsg
+                            *ngIf="contactDataFormGroup.get('lastNameFormControl').invalid && 
+                        (contactDataFormGroup.get('lastNameFormControl').touched || contactDataFormGroup.get('lastNameFormControl').dirty)"
+                            class="val-error">
+                            <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.required">Last name is
+                                required.</span>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="contact-list-divider"></div>
+
+                <div class="data-area">
+                    <span class="channel-of-contact"><i class="fa fa-envelope-o icon-right-margin"
+                            aria-hidden="true"></i>email</span>
+                    <section>
+                        <div>
+                            <input class="email-input" placeholder="e-mail" formControlName="emailFormControl">
+                        </div>
+                        <div @dropErrMsg
+                            *ngIf="contactDataFormGroup.get('emailFormControl').invalid && 
+                        (contactDataFormGroup.get('emailFormControl').touched || contactDataFormGroup.get('emailFormControl').dirty)"
+                            class="val-error">
+                            <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.required">Mail is
+                                required.</span>
+                            <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.email">Mail not in right
+                                format.</span>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="contact-list-divider"></div>
+
+                <div class="data-area">
+                    <span class="channel-of-contact"><i class="fa fa-phone icon-right-margin"
+                            aria-hidden="true"></i>phones</span>
+                    <div @enterLeaveTriggerFavoriteContacts formArrayName="phoneNumbers"
+                        *ngFor="let phone of contactDataFormGroup.get('phoneNumbers').controls; let i = index;">
+                        <div [formGroupName]="i">
+                            <section>
+                                <div class="input-field-phone">
+                                    <input placeholder="Broj telefona" formControlName="phoneNumber">
+                                </div>
+                                <div class="input-field-phone">
+                                    <input placeholder="Lokacija" formControlName="phoneDescription">
+                                </div>
+                                <div style="display: inline-block">
+                                    <i class="fa fa-times icon-delete icon-interactive" aria-hidden="true"
+                                        (click)="removeNumber(i)"></i>
+                                </div>
+                            </section>
+                            <section>
+                                <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.invalid && 
+                            (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.touched 
+                            || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.dirty)"
+                                    class="val-error">
+                                    <span
+                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.required">
+                                        Phone
+                                        number is
+                                        required </span>
+                                    <span
+                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.pattern">
+                                        Wrong
+                                        format </span>
+                                    <span
+                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.maxlength">
+                                        Too
+                                        long </span>
+                                </div>
+                            </section>
+                            <section>
+                                <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.invalid && 
+                            (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.touched 
+                            || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.dirty)"
+                                    class="val-error">
+                                    <span
+                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.required">
+                                        Phone
+                                        description is
+                                        required </span>
+                                    <span
+                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.pattern">
+                                        Wrong
+                                        format </span>
+                                    <span
+                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.maxlength">
+                                        Too
+                                        long </span>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <section>
+                        <button class="action-button button-add-new" (click)="addPhoneNumber()">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add
+                        </button>
+                    </section>
+                </div>
+            </form>
+        </div>
 
         <div class="action-section">
             <button class="action-button button-grey pull-left" (click)="navigateBack()">Cancel</button>

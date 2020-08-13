@@ -19,6 +19,7 @@ import { SharedDataService } from '../../services/shared-data.service';
 export class ContactListFavoritesComponent implements OnInit, AfterViewInit {
 
     favoriteContacts = new Array<Contact>();
+    clickedFavorite = false;
 
     constructor(private sharedDataService: SharedDataService, private router: Router, public dialog: MatDialog,
         private contactService: ContactService, private cdRef: ChangeDetectorRef) { }
@@ -65,6 +66,7 @@ export class ContactListFavoritesComponent implements OnInit, AfterViewInit {
     }
 
     editFavorites(contactId: number) {
+        this.clickedFavorite = true;
         this.contactService.getContactById(contactId).subscribe((response: Contact) => {
             const contact = response;
             if (contact) {
@@ -73,6 +75,7 @@ export class ContactListFavoritesComponent implements OnInit, AfterViewInit {
                     if (responseSave) {
                         this.contactService.getAllContacts().subscribe(allContactsResponse => {
                             this.sharedDataService.updateContactList(allContactsResponse);
+                            this.clickedFavorite = false;
                         });
                     }
                 });

@@ -1,4 +1,4 @@
-<div>
+<div class="hide-mobile">
     <div class="dialog-header">
         {{data.header}}
     </div>
@@ -11,4 +11,18 @@
         <button class="action-button button-green pull-right" (click)="closeDialogSave()">Yes</button>
     </div>
 
+</div>
+
+<div class="show-mobile">
+    <div class="dialog-header">
+        {{data.header}}
+    </div>
+    <div class="header-divider"></div>
+    <div class="dialog-body">
+        {{data.message}}
+    </div>
+    <div class="dialog-action">
+        <button class="action-button button-grey" (click)="closeDialogCancel()">No</button>
+        <button class="action-button button-green" (click)="closeDialogSave()">Yes</button>
+    </div>
 </div>

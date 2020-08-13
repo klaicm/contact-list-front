@@ -4,7 +4,6 @@ import { FormControl } from '@angular/forms';
 import { Contact } from '../models/contact.model';
 import { map, startWith } from 'rxjs/operators';
 import { SharedDataService } from '../services/shared-data.service';
-import { ContactService } from '../services/contact.service';
 
 @Component({
     selector: 'app-contact-list-main',

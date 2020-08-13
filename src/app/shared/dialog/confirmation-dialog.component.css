@@ -20,3 +20,11 @@
     margin-top: 12px;
     margin-bottom: 24px;
 }
+
+.show-mobile {
+    display: block;
+}
+
+.hide-mobile {
+    display: none;
+}

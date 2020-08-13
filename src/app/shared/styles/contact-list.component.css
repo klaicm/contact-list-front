@@ -70,18 +70,18 @@
     margin-left: 16px;
 }
 
-.heart-icon:hover {
-    color: red;
-}
-
 .icon-interactive {
     color: lightgrey;
     transition: font-size 0.2s;
 }
 
 .icon-interactive:hover {
-    font-size: 16px;
+    color: rgba(0, 153, 153, .8);
     cursor: pointer;
+}
+
+.heart-icon:hover {
+    color: red;
 }
 
 .image-cropper {

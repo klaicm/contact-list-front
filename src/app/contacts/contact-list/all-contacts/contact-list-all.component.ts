@@ -40,6 +40,7 @@ export class ContactListAllComponent implements OnInit, AfterViewInit {
         this.sharedDataService.filteringList.subscribe(response => {
             this.allContacts = response;
         });
+        this.clickedFavorite = false;
 
         this.cdf.detectChanges();
     }
