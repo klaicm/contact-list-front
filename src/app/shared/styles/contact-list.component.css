@@ -7,7 +7,7 @@
     border: 1px solid lightgrey;
     border-radius: 3px;
     padding: 16px;
-    height: 140px;
+    height: 150px;
     transition: border 0.2s;
 }
 
@@ -21,6 +21,12 @@
 }
 
 .contact-div:hover > .contact-name {
+    font-weight: 600;
+    color: rgba(0, 153, 153, .8);
+    cursor: pointer;
+}
+
+.contact-div:hover > .name-long {
     font-weight: 600;
     color: rgba(0, 153, 153, .8);
     cursor: pointer;
@@ -100,6 +106,15 @@ img {
     width: auto;
 }
 
+.name-long {
+    max-width: 230px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: lightgrey;
+    font-size: 18px;
+}
+
 .show-mobile {
     display: none;
 }
@@ -108,7 +123,10 @@ img {
     display: block;
 }
 
-@media only screen and (max-width: 600px) {
+
+
+
+@media screen and (max-width: 600px) {
 
     .contacts-body {
         margin-top: 32px; 
@@ -132,6 +150,13 @@ img {
         font-size: 12px;
         transition: color 0.2s;
         
+    }
+
+    .name-long {
+        max-width: 110px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .add-new-contact-div {
@@ -173,3 +198,16 @@ img {
     }
 
 }
+
+@media screen and (max-width: 450px) {
+    .name-long {
+        max-width: 100px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .name-long {
+        max-width: 60px;
+    }
+}
+

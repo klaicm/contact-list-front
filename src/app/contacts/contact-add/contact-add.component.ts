@@ -32,9 +32,14 @@ export class ContactAddComponent implements OnInit {
 
     ngOnInit() {
         this.contactDataFormGroup = this.formBuilder.group({
-            firstNameFormControl: new FormControl('', Validators.required),
-            lastNameFormControl: new FormControl('', Validators.required),
-            emailFormControl: new FormControl('', [Validators.required, Validators.email]),
+            firstNameFormControl: new FormControl('', [
+                Validators.required,
+                Validators.maxLength(15)]),
+            lastNameFormControl: new FormControl('', [
+                Validators.required,
+                Validators.maxLength(15)]),
+            emailFormControl: new FormControl('', [Validators.required, Validators.email,
+            Validators.maxLength(50)]),
             phoneNumbers: this.formBuilder.array([this.createPhoneNumber()])
         });
     }
@@ -57,7 +62,9 @@ export class ContactAddComponent implements OnInit {
     }
 
     removeNumber(i: number) {
-        this.phoneNumbers.removeAt(i);
+        if (i) {
+            this.phoneNumbers.removeAt(i);
+        }
     }
 
     addPhoto() {
@@ -75,6 +82,9 @@ export class ContactAddComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
+
+            this.phoneNumbers = this.contactDataFormGroup.get('phoneNumbers') as FormArray;
+
             if (result === true) {
                 const contact = new Contact();
 

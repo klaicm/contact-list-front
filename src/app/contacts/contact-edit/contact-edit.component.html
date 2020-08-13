@@ -42,6 +42,9 @@
                             class="val-error">
                             <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.required">First Name is
                                 required.</span>
+                            <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.maxlength">
+                                Too
+                                long </span>
                         </div>
                         <div @dropErrMsg
                             *ngIf="contactDataFormGroup.get('lastNameFormControl').invalid && 
@@ -49,6 +52,9 @@
                             class="val-error">
                             <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.required">Last name is
                                 required.</span>
+                            <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.maxlength">
+                                Too
+                                long </span>
                         </div>
                     </section>
                 </div>
@@ -70,6 +76,9 @@
                                 required.</span>
                             <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.email">Mail not in right
                                 format.</span>
+                            <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.maxlength">
+                                Too
+                                long </span>
                         </div>
                     </section>
                 </div>
@@ -170,7 +179,7 @@
         <div class="details-divider"></div>
 
         <div class="image-cropper" (click)="addPhoto()">
-            <img class="rounded"  [src]="contact.profilePhoto"/>
+            <img class="rounded" [src]="contact.profilePhoto" />
             <div class="image-cropper-text">
                 <div class="text"><i class="fa fa-plus icon-interactive" aria-hidden="true"></i></div>
             </div>
@@ -201,6 +210,9 @@
                             class="val-error">
                             <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.required">First Name is
                                 required.</span>
+                            <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.maxlength">
+                                First Name is too
+                                long </span>
                         </div>
                         <div @dropErrMsg
                             *ngIf="contactDataFormGroup.get('lastNameFormControl').invalid && 
@@ -208,6 +220,9 @@
                             class="val-error">
                             <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.required">Last name is
                                 required.</span>
+                            <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.maxlength">
+                                Last name is too
+                                long </span>
                         </div>
                     </section>
                 </div>
@@ -229,6 +244,9 @@
                                 required.</span>
                             <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.email">Mail not in right
                                 format.</span>
+                            <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.maxlength">
+                                Too
+                                long </span>
                         </div>
                     </section>
                 </div>

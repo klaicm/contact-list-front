@@ -5,7 +5,7 @@
     </div>
 </div>
 
-<div class="col-xs-12 col-md-3 col-xl-2 div-padding show-mobile">
+<div class="col-xs-12 col-md-3 col-lg-3 col-xl-3 div-padding show-mobile">
     <div class="contact-div add-new-contact-div" (click)="navigateToContactAdd()">        
         <div class="contact-name add-new-name">
             <i class="fa fa-plus icon-interactive" aria-hidden="true"></i>Add new</div>
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="contact-name" (click)="navigateToContactDetails(contact.id)">{{contact.firstName}}
+            <div class="name-long" (click)="navigateToContactDetails(contact.id)">{{contact.firstName}}
                 {{contact.lastName}}</div>
         </div>
 
@@ -43,7 +43,7 @@
                     <div class="image-cropper" (click)="navigateToContactDetails(contact.id)"><img class="rounded"
                             [src]="contact.profilePhoto" />
                     </div>
-                    <div class="contact-name" (click)="navigateToContactDetails(contact.id)">{{contact.firstName}}
+                    <div class="name-long" (click)="navigateToContactDetails(contact.id)">{{contact.firstName}}
                         {{contact.lastName}}</div>
                 </div>
             </div>

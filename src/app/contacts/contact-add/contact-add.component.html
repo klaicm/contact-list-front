@@ -37,6 +37,9 @@
                             class="val-error">
                             <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.required">First Name is
                                 required.</span>
+                            <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.maxlength">
+                                Too
+                                long </span>
                         </div>
                         <div @dropErrMsg
                             *ngIf="contactDataFormGroup.get('lastNameFormControl').invalid && 
@@ -44,6 +47,9 @@
                             class="val-error">
                             <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.required">Last name is
                                 required.</span>
+                            <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.maxlength">
+                                Too
+                                long </span>
                         </div>
                     </section>
                 </div>
@@ -194,6 +200,9 @@
                             class="val-error">
                             <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.required">First Name is
                                 required.</span>
+                            <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.maxlength">
+                                Too
+                                long </span>
                         </div>
                         <div @dropErrMsg
                             *ngIf="contactDataFormGroup.get('lastNameFormControl').invalid && 
@@ -201,6 +210,9 @@
                             class="val-error">
                             <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.required">Last name is
                                 required.</span>
+                            <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.maxlength">
+                                Too
+                                long </span>
                         </div>
                     </section>
                 </div>

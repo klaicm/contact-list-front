@@ -34,9 +34,14 @@ export class ContactEditComponent implements OnInit, OnDestroy {
         public dialog: MatDialog, private router: Router, private formBuilder: FormBuilder) {
 
         this.contactDataFormGroup = this.formBuilder.group({
-            firstNameFormControl: new FormControl('', Validators.required),
-            lastNameFormControl: new FormControl('', Validators.required),
-            emailFormControl: new FormControl('', [Validators.required, Validators.email]),
+            firstNameFormControl: new FormControl('', [
+                Validators.required,
+                Validators.maxLength(15)]),
+            lastNameFormControl: new FormControl('', [
+                Validators.required,
+                Validators.maxLength(15)]),
+            emailFormControl: new FormControl('', [Validators.required, Validators.email,
+                Validators.maxLength(50)]),
             phoneNumbers: this.formBuilder.array([])
         });
 
