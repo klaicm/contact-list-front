@@ -151,15 +151,6 @@ input:invalid {
     margin-top: 32px;
 }
 
-.show-mobile {
-    display: none;
-}
-
-.hide-mobile {
-    display: block;
-}
-
-
 @media only screen and (max-width: 600px) {
     
     .image-cropper {
@@ -176,14 +167,6 @@ input:invalid {
 
     .mobile-details-header-icons-right {
         text-align: right;
-    }
-
-    .details-divider {
-        border-bottom: 1px solid lightgrey;
-        margin-top: 12px;
-        margin-bottom: 12px;
-        margin-left: -15px;
-        margin-right: -15px;
     }
 
     .channel-of-contact {
@@ -216,13 +199,10 @@ input:invalid {
         margin-left: 8px;
     }
 
-    .show-mobile {
-        display: block;
+    .val-error {
+        margin-left: 16px;
+        color: red;
+        font-size: 10px;
     }
-    
-    .hide-mobile {
-        display: none;
-    }
-
 
 }

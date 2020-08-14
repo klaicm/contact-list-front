@@ -88,14 +88,6 @@
     margin-bottom: 32px;
 }
 
-.show-mobile {
-    display: none;
-}
-
-.hide-mobile {
-    display: block;
-}
-
 
 @media only screen and (max-width: 600px) {
 
@@ -149,13 +141,5 @@
         border: none;
         padding-left: 12px;
         font-size: 12px;
-    }
-
-    .show-mobile {
-        display: block;
-    }
-    
-    .hide-mobile {
-        display: none;
     }
 }

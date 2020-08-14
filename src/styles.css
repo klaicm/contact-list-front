@@ -13,13 +13,40 @@ body {
     overflow-x: hidden;  
 }
 
-@media only screen and (max-width: 900px) { /* Screen which has a maximum width of 900px */
+img {
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+}
+
+.show-mobile {
+    display: none;
+}
+
+.hide-mobile {
+    display: block;
+}
+
+.client-data-header {
+    margin-top: 64px;
+}
+
+@media only screen and (max-width: 600px) {
 
     body {
-        background-color: lightgrey;
-        margin-top: 0px;
         margin-bottom: 12px;
-        overflow-x: hidden;  
+    }
+
+    .show-mobile {
+        display: block;
+    }
+    
+    .hide-mobile {
+        display: none;
+    }
+
+    .client-data-header {
+        margin-top: 12px;
     }
 
 }

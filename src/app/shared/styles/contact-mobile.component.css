@@ -17,15 +17,6 @@
         font-size: 14px;
     }
 
-    .icon-left-margin {
-        margin-left: 24px;
-    }
-
-    .details-icons-header {
-        width: 100%;
-        color: lightgrey;
-    }
-
     .details-divider {
         border-bottom: 1px solid lightgrey;
         margin-top: 12px;
@@ -63,13 +54,5 @@
     .icon-column {
         /*padding-right: 4px;*/
         color: rgba(0, 153, 153, .8); 
-    }
-
-    .show-mobile {
-        display: block;
-    }
-    
-    .hide-mobile {
-        display: none;
     }
 }

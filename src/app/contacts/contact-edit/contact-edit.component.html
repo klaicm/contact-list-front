@@ -1,7 +1,7 @@
 <div @enterLeaveTriggerFavoriteContacts *ngIf="isLoaded" class="container">
 
     <!-- DEKSTOP -->
-    <div class="hide-mobile" style="margin-top: 64px;">
+    <div class="hide-mobile client-data-header">
         <div class="col-xs-4">
             <div class="image-cropper pull-right" (click)="addPhoto()">
                 <img class="rounded" [src]="contact.profilePhoto" />
@@ -163,7 +163,7 @@
 
 
     <!-- MOBILE -->
-    <div class="show-mobile" style="margin-top: 12px;">
+    <div class="show-mobile client-data-header">
 
         <div class="details-icons-header">
             <div class="mobile-details-header-icons-left">

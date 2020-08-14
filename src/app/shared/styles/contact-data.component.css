@@ -8,12 +8,6 @@
     margin-bottom: 8px;
 }
 
-img {
-    margin: 0 auto;
-    height: 100%;
-    width: auto;
-}
-
 .contact-name {
     text-align: left;
     font-size: 32px;
@@ -74,14 +68,6 @@ td {
 
 .icon-right-margin {
     margin-right: 16px;
-}
-
-.show-mobile {
-    display: none;
-}
-
-.hide-mobile {
-    display: block;
 }
 
 @media only screen and (max-width: 600px) {
@@ -162,11 +148,4 @@ td {
         color: rgba(0, 153, 153, .8); 
     }
 
-    .show-mobile {
-        display: block;
-    }
-    
-    .hide-mobile {
-        display: none;
-    }
 }

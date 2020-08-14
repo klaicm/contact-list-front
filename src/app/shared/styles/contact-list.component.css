@@ -100,12 +100,6 @@
     margin-bottom: 8px;
 }
 
-img {
-    margin: 0 auto;
-    height: 100%;
-    width: auto;
-}
-
 .name-long {
     max-width: 230px;
     white-space: nowrap;
@@ -114,17 +108,6 @@ img {
     color: lightgrey;
     font-size: 18px;
 }
-
-.show-mobile {
-    display: none;
-}
-
-.hide-mobile {
-    display: block;
-}
-
-
-
 
 @media screen and (max-width: 600px) {
 
@@ -183,14 +166,6 @@ img {
         color: lightgrey;
         font-size: 11px;
         padding-right: 8px;
-    }
-
-    .show-mobile {
-        display: block;
-    }
-      
-    .hide-mobile {
-        display: none;
     }
 
     .div-padding {
