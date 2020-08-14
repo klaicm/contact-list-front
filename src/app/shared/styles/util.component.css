@@ -1,0 +1,58 @@
+.action-button {
+    margin: 8px;
+    padding: 8px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-radius: 48px;    
+    font-weight: 700;    
+    border: transparent;
+    width: 100px;
+}
+
+.action-button:focus {
+    outline: none;
+}
+/*
+.action-button:disabled {
+    background-color: lightgrey;
+    color: white;
+}
+*/
+.button-green {
+    background-color: rgba(0, 153, 153, .8);
+    color: white;
+}
+
+.button-grey {
+    background-color: grey;
+    color: white;
+}
+
+.button-green:hover {
+    background-color: rgba(0, 153, 153, 1);
+}
+
+.button-grey:hover {
+    background-color: rgb(175, 175, 175);
+}
+
+.button-green:disabled {
+    background-color: lightgrey;
+    color: white;
+}
+
+.button-grey:disabled {
+    background-color: rgb(175, 175, 175);
+}
+
+.button-add-new {
+    background-color: white;
+    color: rgba(0, 153, 153, .8);
+    border: 1px dashed rgba(0, 153, 153, .8);
+}
+
+.button-add-new:hover {
+    background-color: rgba(0, 153, 153, .8);;
+    color: white;
+    border: 1px dashed white;
+}

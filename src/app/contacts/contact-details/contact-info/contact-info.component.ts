@@ -1,21 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ContactService } from '../services/contact.service';
-import { Contact } from '../models/contact.model';
+import { ContactService } from '../../services/contact.service';
+import { Contact } from '../../models/contact.model';
 import { Animations } from 'src/app/shared/animations/animations';
 import { Location } from '@angular/common';
 
 @Component({
-    selector: 'app-contact-details',
-    templateUrl: './contact-details.component.html',
-    styleUrls: ['./contact-details.component.css', '../../shared/styles/contact-data.component.css'],
+    selector: 'app-info-details',
+    templateUrl: './contact-info.component.html',
+    styleUrls: ['./contact-info.component.css', '../../../shared/styles/contact-data.component.css'],
     animations: [
         Animations.enterLeaveTriggerFavoriteContacts
     ]
 })
 
-export class ContactDetailsComponent implements OnInit, OnDestroy {
+export class ContactInfoComponent implements OnInit, OnDestroy {
 
     private sub: Subscription;
     contact: Contact;

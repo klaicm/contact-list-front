@@ -1,36 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Animations } from 'src/app/shared/animations/animations';
-import { ContactService } from '../services/contact.service';
-import { Contact } from '../models/contact.model';
-import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { Location } from '@angular/common';
+import { FormArray, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Contact } from '../../models/contact.model';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialog/confirmation-dialog.component';
+import { ContactService } from '../../services/contact.service';
+import { Location } from '@angular/common';
 
-@Component({
-    selector: 'app-contact-add',
-    templateUrl: './contact-add.component.html',
-    styleUrls: ['./contact-add.component.css', '../../shared/styles/contact-data.component.css',
-        '../../shared/styles/edit-add.component.css'],
-    animations: [
-        Animations.enterLeaveTriggerFavoriteContacts,
-        Animations.dropErrMsg
-    ]
-})
-
-export class ContactAddComponent implements OnInit {
-
-    contactList = new Array<Contact>();
-    // this will be used for loader
-    isLoaded = true;
+export abstract class AbstractContactDetails {
 
     contactDataFormGroup: FormGroup;
     phoneNumbers: FormArray;
 
-    constructor(private contactService: ContactService, private _location: Location, public dialog: MatDialog,
-        private formBuilder: FormBuilder) { }
+    constructor(protected formBuilder: FormBuilder, protected dialog: MatDialog, protected contactService: ContactService,
+        protected _location: Location) { }
 
-    ngOnInit() {
+
+    createContactDataFormGroup() {
         this.contactDataFormGroup = this.formBuilder.group({
             firstNameFormControl: new FormControl('', [
                 Validators.required,
@@ -40,7 +24,7 @@ export class ContactAddComponent implements OnInit {
                 Validators.maxLength(15)]),
             emailFormControl: new FormControl('', [Validators.required, Validators.email,
             Validators.maxLength(50)]),
-            phoneNumbers: this.formBuilder.array([this.createPhoneNumber()])
+            phoneNumbers: this.formBuilder.array([])
         });
     }
 
@@ -67,15 +51,36 @@ export class ContactAddComponent implements OnInit {
         }
     }
 
-    addPhoto() {
-
+    setExistingPhoneNumber(phoneNumber: String, phoneDescription: String) {
+        return this.formBuilder.group({
+            phoneNumber: new FormControl(phoneNumber, [
+                Validators.required,
+                Validators.pattern('^[0-9]*$'),
+                Validators.maxLength(10)
+            ]),
+            phoneDescription: new FormControl(phoneDescription, [
+                Validators.required,
+                Validators.maxLength(10)
+            ])
+        });
     }
 
-    saveContact() {
+    saveContact(isNewContact: boolean, editingContact?: Contact) {
+        let message: string;
+        let header: string;
+
+        if (isNewContact) {
+            message = 'Are you sure you want to add this contact?';
+            header = 'Add';
+        } else {
+            message = 'Are you sure you want to edit this contact?';
+            header = 'Edit';
+        }
+
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             data: {
-                message: 'Are you sure you want to add this contact?',
-                header: 'Add'
+                message: message,
+                header: header
             },
             width: '350px',
             disableClose: true
@@ -83,17 +88,21 @@ export class ContactAddComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
 
-            this.phoneNumbers = this.contactDataFormGroup.get('phoneNumbers') as FormArray;
-
             if (result === true) {
-                const contact = new Contact();
+                let contact = new Contact();
+
+                if (isNewContact) {
+                    contact.isFavorite = false;
+                    contact.profilePhoto = '../../assets/images/forrest_gump.jpg';
+                    this.phoneNumbers = this.contactDataFormGroup.get('phoneNumbers') as FormArray;
+                } else {
+                    contact = editingContact;
+                }
 
                 contact.firstName = this.contactDataFormGroup.get('firstNameFormControl').value;
                 contact.lastName = this.contactDataFormGroup.get('lastNameFormControl').value;
                 contact.email = this.contactDataFormGroup.get('emailFormControl').value;
-                contact.firstName = this.contactDataFormGroup.get('firstNameFormControl').value;
-                contact.isFavorite = false;
-                contact.profilePhoto = '../../assets/images/forrest_gump.jpg';
+
 
                 contact.phoneNumbers = '';
                 this.phoneNumbers.controls.forEach((a) => {
@@ -109,22 +118,16 @@ export class ContactAddComponent implements OnInit {
                 this.contactService.saveContact(contact).subscribe(response => {
                     if (response) {
                         // notification bar or success snackbar
+                        setTimeout(() => {
+                            this._location.back();
+                        }, 100);
                     }
+                }, err => {
+                    // handle
                 });
-
-                setTimeout(() => {
-                    this._location.back();
-                }, 100);
 
             }
         });
-    }
-
-    getNextContactId(): number {
-        this.contactList.sort((a, b) => (a.id > b.id) ? 1 : -1);
-        const contact = this.contactList[this.contactList.length - 1];
-        const maxId = contact.id;
-        return maxId + 1;
     }
 
     navigateBack() {

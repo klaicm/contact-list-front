@@ -1,18 +1,24 @@
 <div @enterLeaveTriggerFavoriteContacts *ngIf="isLoaded" class="container">
-    <!-- MOBILE -->
+
+    <!-- DEKSTOP -->
     <div class="hide-mobile client-data-header">
         <div class="col-xs-4">
             <div class="image-cropper pull-right" (click)="addPhoto()">
-                <img class="rounded" />
+                <img class="rounded" [src]="contact.profilePhoto" />
                 <div class="image-cropper-text">
-                    <div class="text"><i class="fa fa-upload icon-interactive" aria-hidden="true"></i></div>
+                    <div class="text"><i class="fa fa-plus icon-interactive" aria-hidden="true"></i></div>
                 </div>
             </div>
         </div>
+
         <div class="col-xs-8">
             <div class="contact-name">
                 <div class="icon-left">
                     <i class="fa fa-arrow-left icon-interactive" aria-hidden="true" (click)="navigateBack()"></i>
+                </div>
+
+                <div class="icon-right">
+                    <i class="fa fa-trash icon-interactive" aria-hidden="true" (click)="deleteContact(contact)"></i>
                 </div>
             </div>
 
@@ -25,7 +31,6 @@
                         <div class="input-field" style="display: inline-block">
                             <input placeholder="First name" formControlName="firstNameFormControl">
                         </div>
-
                         <div class="input-field" style="display: inline-block">
                             <input placeholder="Last name" formControlName="lastNameFormControl">
                         </div>
@@ -71,6 +76,9 @@
                                 required.</span>
                             <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.email">Mail not in right
                                 format.</span>
+                            <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.maxlength">
+                                Too
+                                long </span>
                         </div>
                     </section>
                 </div>
@@ -137,7 +145,6 @@
                             </section>
                         </div>
                     </div>
-
                     <section>
                         <button class="action-button button-add-new" (click)="addPhoneNumber()">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add
@@ -149,10 +156,11 @@
             <div class="action-section">
                 <button class="action-button button-grey pull-left" (click)="navigateBack()">Cancel</button>
                 <button class="action-button button-green" [disabled]="contactDataFormGroup.invalid"
-                    (click)="saveContact()">Save</button>
+                    (click)="saveContact(false, contact)">Save</button>
             </div>
         </div>
     </div>
+
 
     <!-- MOBILE -->
     <div class="show-mobile client-data-header">
@@ -162,16 +170,18 @@
                 <i class="fa fa-arrow-left icon-interactive pull-left" aria-hidden="true" (click)="navigateBack()"></i>
             </div>
             <div class="mobile-details-header-icons-right">
+
+                <i class="fa fa-trash icon-interactive" aria-hidden="true" (click)="deleteContact(contact)"></i>
             </div>
+
         </div>
 
         <div class="details-divider"></div>
 
-
         <div class="image-cropper" (click)="addPhoto()">
-            <img class="rounded" />
+            <img class="rounded" [src]="contact.profilePhoto" />
             <div class="image-cropper-text">
-                <div class="text"><i class="fa fa-upload icon-interactive" aria-hidden="true"></i></div>
+                <div class="text"><i class="fa fa-plus icon-interactive" aria-hidden="true"></i></div>
             </div>
         </div>
 
@@ -201,7 +211,7 @@
                             <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.required">First Name is
                                 required.</span>
                             <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.maxlength">
-                                Too
+                                First Name is too
                                 long </span>
                         </div>
                         <div @dropErrMsg
@@ -211,7 +221,7 @@
                             <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.required">Last name is
                                 required.</span>
                             <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.maxlength">
-                                Too
+                                Last name is too
                                 long </span>
                         </div>
                     </section>
@@ -234,6 +244,9 @@
                                 required.</span>
                             <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.email">Mail not in right
                                 format.</span>
+                            <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.maxlength">
+                                Too
+                                long </span>
                         </div>
                     </section>
                 </div>
@@ -312,7 +325,7 @@
         <div class="action-section">
             <button class="action-button button-grey pull-left" (click)="navigateBack()">Cancel</button>
             <button class="action-button button-green" [disabled]="contactDataFormGroup.invalid"
-                (click)="saveContact()">Save</button>
+                (click)="saveContact(false, contact)">Save</button>
         </div>
     </div>
 </div>
