@@ -1,13 +1,14 @@
 {
   "name": "contact-list-front",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +25,7 @@
     "@angular/router": "^6.1.0",
     "bootstrap": "^3.4.1",
     "core-js": "^2.5.4",
+    "express": "^4.17.1",
     "font-awesome": "^4.7.0",
     "rxjs": "6.0.0",
     "zone.js": "~0.8.26"
@@ -48,5 +50,9 @@
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
     "typescript": "~2.7.2"
+  },
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.4.1"
   }
 }
