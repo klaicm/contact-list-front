@@ -16,6 +16,7 @@ import { ConfirmationDialogComponent } from './shared/dialog/confirmation-dialog
 import { MatDialogModule } from '@angular/material';
 import { SharedDataService } from './contacts/services/shared-data.service';
 import { HttpClientModule } from '@angular/common/http';
+import { PrintErrorComponent } from './shared/util/validation-errors/print-error.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     ContactListMainComponent,
     ContactEditComponent,
     ContactAddComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    PrintErrorComponent
   ],
   imports: [
     RouterModule.forRoot(routing),

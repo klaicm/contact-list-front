@@ -31,26 +31,10 @@
                         </div>
                     </section>
                     <section>
-                        <div @dropErrMsg
-                            *ngIf="contactDataFormGroup.get('firstNameFormControl').invalid && 
-                    (contactDataFormGroup.get('firstNameFormControl').touched || contactDataFormGroup.get('firstNameFormControl').dirty)"
-                            class="val-error">
-                            <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.required">First Name is
-                                required.</span>
-                            <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.maxlength">
-                                Too
-                                long </span>
-                        </div>
-                        <div @dropErrMsg
-                            *ngIf="contactDataFormGroup.get('lastNameFormControl').invalid && 
-                    (contactDataFormGroup.get('lastNameFormControl').touched || contactDataFormGroup.get('lastNameFormControl').dirty)"
-                            class="val-error">
-                            <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.required">Last name is
-                                required.</span>
-                            <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.maxlength">
-                                Too
-                                long </span>
-                        </div>
+                        <app-print-error @dropErrMsg [control]="contactDataFormGroup.get('firstNameFormControl')">
+                        </app-print-error>
+                        <app-print-error @dropErrMsg [control]="contactDataFormGroup.get('lastNameFormControl')">
+                        </app-print-error>
                     </section>
                 </div>
 
@@ -63,15 +47,8 @@
                         <div class="input-field">
                             <input class="email-input" placeholder="e-mail" formControlName="emailFormControl">
                         </div>
-                        <div @dropErrMsg
-                            *ngIf="contactDataFormGroup.get('emailFormControl').invalid && 
-                    (contactDataFormGroup.get('emailFormControl').touched || contactDataFormGroup.get('emailFormControl').dirty)"
-                            class="val-error">
-                            <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.required">Mail is
-                                required.</span>
-                            <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.email">Mail not in right
-                                format.</span>
-                        </div>
+                        <app-print-error @dropErrMsg [control]="contactDataFormGroup.get('emailFormControl')">
+                        </app-print-error>
                     </section>
                 </div>
 
@@ -96,44 +73,14 @@
                                 </div>
                             </section>
                             <section>
-                                <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.invalid && 
-                        (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.touched 
-                        || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.dirty)"
-                                    class="val-error">
-                                    <span
-                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.required">
-                                        Phone
-                                        number is
-                                        required </span>
-                                    <span
-                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.pattern">
-                                        Wrong
-                                        format </span>
-                                    <span
-                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.maxlength">
-                                        Too
-                                        long </span>
-                                </div>
+                                <app-print-error @dropErrMsg
+                                    [control]="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber">
+                                </app-print-error>
                             </section>
                             <section>
-                                <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.invalid && 
-                        (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.touched 
-                        || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.dirty)"
-                                    class="val-error">
-                                    <span
-                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.required">
-                                        Phone
-                                        description is
-                                        required </span>
-                                    <span
-                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.pattern">
-                                        Wrong
-                                        format </span>
-                                    <span
-                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.maxlength">
-                                        Too
-                                        long </span>
-                                </div>
+                                <app-print-error @dropErrMsg
+                                    [control]="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription">
+                                </app-print-error>
                             </section>
                         </div>
                     </div>
@@ -194,26 +141,10 @@
                         </div>
                     </section>
                     <section>
-                        <div @dropErrMsg
-                            *ngIf="contactDataFormGroup.get('firstNameFormControl').invalid && 
-                        (contactDataFormGroup.get('firstNameFormControl').touched || contactDataFormGroup.get('firstNameFormControl').dirty)"
-                            class="val-error">
-                            <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.required">First Name is
-                                required.</span>
-                            <span *ngIf="contactDataFormGroup.get('firstNameFormControl').errors.maxlength">
-                                Too
-                                long </span>
-                        </div>
-                        <div @dropErrMsg
-                            *ngIf="contactDataFormGroup.get('lastNameFormControl').invalid && 
-                        (contactDataFormGroup.get('lastNameFormControl').touched || contactDataFormGroup.get('lastNameFormControl').dirty)"
-                            class="val-error">
-                            <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.required">Last name is
-                                required.</span>
-                            <span *ngIf="contactDataFormGroup.get('lastNameFormControl').errors.maxlength">
-                                Too
-                                long </span>
-                        </div>
+                        <app-print-error @dropErrMsg [control]="contactDataFormGroup.get('firstNameFormControl')">
+                        </app-print-error>
+                        <app-print-error @dropErrMsg [control]="contactDataFormGroup.get('lastNameFormControl')">
+                        </app-print-error>
                     </section>
                 </div>
 
@@ -226,15 +157,8 @@
                         <div>
                             <input class="email-input" placeholder="e-mail" formControlName="emailFormControl">
                         </div>
-                        <div @dropErrMsg
-                            *ngIf="contactDataFormGroup.get('emailFormControl').invalid && 
-                        (contactDataFormGroup.get('emailFormControl').touched || contactDataFormGroup.get('emailFormControl').dirty)"
-                            class="val-error">
-                            <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.required">Mail is
-                                required.</span>
-                            <span *ngIf="contactDataFormGroup.get('emailFormControl').errors.email">Mail not in right
-                                format.</span>
-                        </div>
+                        <app-print-error @dropErrMsg [control]="contactDataFormGroup.get('emailFormControl')">
+                        </app-print-error>
                     </section>
                 </div>
 
@@ -259,44 +183,14 @@
                                 </div>
                             </section>
                             <section>
-                                <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.invalid && 
-                            (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.touched 
-                            || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.dirty)"
-                                    class="val-error">
-                                    <span
-                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.required">
-                                        Phone
-                                        number is
-                                        required </span>
-                                    <span
-                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.pattern">
-                                        Wrong
-                                        format </span>
-                                    <span
-                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber.errors.maxlength">
-                                        Too
-                                        long </span>
-                                </div>
+                                <app-print-error @dropErrMsg
+                                    [control]="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneNumber">
+                                </app-print-error>
                             </section>
                             <section>
-                                <div @dropErrMsg *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.invalid && 
-                            (contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.touched 
-                            || contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.dirty)"
-                                    class="val-error">
-                                    <span
-                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.required">
-                                        Phone
-                                        description is
-                                        required </span>
-                                    <span
-                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.pattern">
-                                        Wrong
-                                        format </span>
-                                    <span
-                                        *ngIf="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription.errors.maxlength">
-                                        Too
-                                        long </span>
-                                </div>
+                                <app-print-error @dropErrMsg
+                                    [control]="contactDataFormGroup.controls.phoneNumbers.controls[i].controls.phoneDescription">
+                                </app-print-error>
                             </section>
                         </div>
                     </div>

@@ -117,17 +117,31 @@ export abstract class AbstractContactDetails {
 
                 this.contactService.saveContact(contact).subscribe(response => {
                     if (response) {
-                        // notification bar or success snackbar
+
                         setTimeout(() => {
                             this._location.back();
                         }, 100);
                     }
                 }, err => {
-                    // handle
+
                 });
 
             }
         });
+    }
+
+    addPhoto() {
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            data: {
+                message: 'Not supported at this time :(',
+                header: 'Upload picture'
+            },
+            width: '350px',
+            disableClose: true
+        });
+
+        dialogRef.afterClosed().subscribe(result => {});
+
     }
 
     navigateBack() {

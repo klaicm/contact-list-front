@@ -7,8 +7,8 @@
         {{data.message}}
     </div>
     <div class="dialog-action">
-        <button class="action-button button-grey pull-left" (click)="closeDialogCancel()">No</button>
-        <button class="action-button button-green pull-right" (click)="closeDialogSave()">Yes</button>
+        <button class="action-button button-grey pull-left" (click)="closeDialog(false)">No</button>
+        <button class="action-button button-green pull-right" (click)="closeDialog(true)">Yes</button>
     </div>
 
 </div>
@@ -22,7 +22,7 @@
         {{data.message}}
     </div>
     <div class="dialog-action">
-        <button class="action-button button-grey" (click)="closeDialogCancel()">No</button>
-        <button class="action-button button-green" (click)="closeDialogSave()">Yes</button>
+        <button class="action-button button-grey" (click)="closeDialog(false)">No</button>
+        <button class="action-button button-green" (click)="closeDialog(true)">Yes</button>
     </div>
 </div>

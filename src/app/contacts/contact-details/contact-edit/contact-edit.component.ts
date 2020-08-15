@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactService } from '../../services/contact.service';
 import { Contact } from '../../models/contact.model';
-import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialog/confirmation-dialog.component';
@@ -56,8 +56,6 @@ export class ContactEditComponent extends AbstractContactDetails implements OnIn
             this.contact = contact;
         });
     }
-
-    addPhoto() { }
 
     ngOnDestroy() {
         this.sub.unsubscribe();

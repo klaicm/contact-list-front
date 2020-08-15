@@ -2,10 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Animations } from 'src/app/shared/animations/animations';
 import { ContactService } from '../../services/contact.service';
 import { Contact } from '../../models/contact.model';
-import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
-import { ConfirmationDialogComponent } from 'src/app/shared/dialog/confirmation-dialog.component';
 import { AbstractContactDetails } from '../shared/abstract-contact-details.class';
 
 @Component({
@@ -32,10 +31,6 @@ export class ContactAddComponent extends AbstractContactDetails implements OnIni
 
     ngOnInit() {
         this.createContactDataFormGroup();
-    }
-
-    addPhoto() {
-
     }
 
 }
