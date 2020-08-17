@@ -103,17 +103,7 @@ export abstract class AbstractContactDetails {
                 contact.lastName = this.contactDataFormGroup.get('lastNameFormControl').value;
                 contact.email = this.contactDataFormGroup.get('emailFormControl').value;
 
-
-                contact.phoneNumbers = '';
-                this.phoneNumbers.controls.forEach((a) => {
-                    if (a.get('phoneNumber').value) {
-                        contact.phoneNumbers = contact.phoneNumbers + '#' + a.get('phoneNumber').value + '$'
-                            + a.get('phoneDescription').value;
-                    }
-                });
-                if (contact.phoneNumbers !== '') {
-                    contact.phoneNumbers = contact.phoneNumbers + '#';
-                }
+                contact.phoneNumbers = this.contactDataFormGroup.get('phoneNumbers').value;
 
                 this.contactService.saveContact(contact).subscribe(response => {
                     if (response) {

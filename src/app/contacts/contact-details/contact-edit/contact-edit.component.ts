@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialog/confirmation-dialog.component';
 import { AbstractContactDetails } from '../shared/abstract-contact-details.class';
+import { PhoneNumber } from '../../models/phone-number.model';
 
 @Component({
     selector: 'app-contact-edit',
@@ -69,20 +70,9 @@ export class ContactEditComponent extends AbstractContactDetails implements OnIn
 
         this.phoneNumbers = this.contactDataFormGroup.get('phoneNumbers') as FormArray;
 
-        let allPhoneNumbers = contact.phoneNumbers;
+        const allPhoneNumbers: Array<PhoneNumber> = contact.phoneNumbers;
 
-        while (allPhoneNumbers.length > 1) {
-            const phoneNumber = allPhoneNumbers.substring(allPhoneNumbers.indexOf('#') + 1,
-                allPhoneNumbers.indexOf('$'));
-            allPhoneNumbers = allPhoneNumbers.substring(allPhoneNumbers.indexOf('$'));
-            const phoneDescription = allPhoneNumbers.substring(allPhoneNumbers.indexOf('$') + 1,
-                allPhoneNumbers.indexOf('#'));
-
-            this.phoneNumbers.push(this.setExistingPhoneNumber(phoneNumber, phoneDescription));
-
-            allPhoneNumbers = allPhoneNumbers.substring(allPhoneNumbers.indexOf('#'));
-
-        }
+        allPhoneNumbers.forEach(a => this.phoneNumbers.push(this.setExistingPhoneNumber(a.phoneNumber, a.phoneDescription)));
     }
 
     deleteContact(contact: Contact) {

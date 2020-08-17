@@ -33,9 +33,9 @@
                                 aria-hidden="true"></i>numbers</td>
                         <td>
                             <table>
-                                <tr *ngFor="let phoneNumber of phoneNumbersMap | keyvalue">
-                                    <td class="contact-data">{{phoneNumber.key}}</td>
-                                    <td class="contact-data">{{phoneNumber.value}}</td>
+                                <tr *ngFor="let phoneNumber of contact.phoneNumbers">
+                                    <td class="contact-data">{{phoneNumber.phoneNumber}}</td>
+                                    <td class="contact-data">{{phoneNumber.phoneDescription}}</td>
                                 </tr>
                             </table>
                         </td>

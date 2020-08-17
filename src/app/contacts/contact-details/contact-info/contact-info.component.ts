@@ -36,21 +36,6 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         this.contactService.getContactById(contactId).subscribe((response: Contact) => {
             this.isLoaded = true;
             this.contact = response;
-
-            let allPhoneNumbers = this.contact.phoneNumbers;
-
-            while (allPhoneNumbers.length > 1) {
-                const phoneNumber = allPhoneNumbers.substring(allPhoneNumbers.indexOf('#') + 1,
-                    allPhoneNumbers.indexOf('$'));
-                allPhoneNumbers = allPhoneNumbers.substring(allPhoneNumbers.indexOf('$'));
-                const phoneDescription = allPhoneNumbers.substring(allPhoneNumbers.indexOf('$') + 1,
-                    allPhoneNumbers.indexOf('#'));
-
-                this.phoneNumbersMap.set(phoneDescription.toLocaleUpperCase(), phoneNumber);
-
-                allPhoneNumbers = allPhoneNumbers.substring(allPhoneNumbers.indexOf('#'));
-
-            }
         });
     }
 
